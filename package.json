@@ -1,7 +1,7 @@
 {
   "name": "twl",
   "type": "module",
-  "version": "0.0.0-alpha.3",
+  "version": "0.0.0-alpha.4",
   "packageManager": "pnpm@9.1.0",
   "description": "",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
