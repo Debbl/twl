@@ -1,3 +1,3 @@
-export * from "./lib/index";
-export * from "./utils/index";
-export * from "./class/index";
+export * from "./lib";
+export * from "./utils";
+export * from "./class";
