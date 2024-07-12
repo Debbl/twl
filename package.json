@@ -1,7 +1,7 @@
 {
   "name": "@twl/monorepo",
   "type": "module",
-  "version": "0.0.0-alpha.5",
+  "version": "0.0.0-alpha.6",
   "private": true,
   "packageManager": "pnpm@9.5.0",
   "description": "A TailwindCSS utility library.",
