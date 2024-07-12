@@ -1,10 +1,7 @@
-function hover(input: string) {
-  const cls = input.split(" ");
-  return cls.map((c) => `hover:${c}`).join(" ");
-}
+export function hover(input: string) {
+  const str = `hover:${input}`;
 
-function isHover(input: string) {
-  return input.startsWith("hover:");
-}
+  if (input === "~") return "";
 
-export { hover, isHover };
+  return str;
+}

@@ -1,4 +1,6 @@
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "rollup";
+import alias from "@rollup/plugin-alias";
 
 import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
@@ -18,7 +20,19 @@ export default defineConfig([
         format: "cjs",
       },
     ],
-    plugins: [typescript(), nodeResolve(), commonjs()],
+    plugins: [
+      alias({
+        entries: [
+          {
+            find: "~",
+            replacement: fileURLToPath(new URL("src", import.meta.url)),
+          },
+        ],
+      }),
+      typescript(),
+      nodeResolve(),
+      commonjs(),
+    ],
   },
   {
     input: "src/index.ts",
@@ -26,6 +40,16 @@ export default defineConfig([
       file: "dist/index.d.ts",
       format: "esm",
     },
-    plugins: [dts()],
+    plugins: [
+      alias({
+        entries: [
+          {
+            find: "~",
+            replacement: fileURLToPath(new URL("src", import.meta.url)),
+          },
+        ],
+      }),
+      dts(),
+    ],
   },
 ]);
