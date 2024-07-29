@@ -46,7 +46,7 @@
     "simple-git-hooks": "^2.11.1",
     "turbo": "^2.0.6",
     "typescript": "^5.5.3",
-    "vitest": "^2.0.2"
+    "vitest": "^2.0.4"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
