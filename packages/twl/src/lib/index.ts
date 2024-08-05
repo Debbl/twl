@@ -1,6 +1,12 @@
 import type { ClassValue } from "clsx";
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
 import { flex, grid, hover } from "~/class";
-import { cn, isValidPrefix } from "~/utils";
+import { isValidPrefix } from "~/utils";
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 function parse(prefix: string, input: string) {
   const str = `${prefix}-${input}`;

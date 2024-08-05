@@ -1,3 +1,5 @@
 export * from "./lib";
-export * from "./utils";
 export * from "./class";
+
+export { clsx } from "clsx";
+export { twMerge } from "tailwind-merge";

@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.0-alpha.6",
   "private": true,
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.6.0",
   "description": "A TailwindCSS utility library.",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "license": "MIT",
@@ -31,22 +31,22 @@
     "tailwind-merge": "^2.4.0"
   },
   "devDependencies": {
-    "@debbl/eslint-config": "^3.3.2",
+    "@debbl/eslint-config": "^3.4.0",
     "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-commonjs": "^26.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.6",
-    "@types/node": "^20.14.10",
-    "bumpp": "^9.4.1",
-    "eslint": "8.57.0",
-    "lint-staged": "^15.2.7",
+    "@types/node": "^22.1.0",
+    "bumpp": "^9.4.2",
+    "eslint": "^9.8.0",
+    "lint-staged": "^15.2.8",
     "rimraf": "^6.0.1",
-    "rollup": "^4.18.1",
+    "rollup": "^4.20.0",
     "rollup-plugin-dts": "^6.1.1",
     "simple-git-hooks": "^2.11.1",
-    "turbo": "^2.0.6",
-    "typescript": "^5.5.3",
-    "vitest": "^2.0.2"
+    "turbo": "^2.0.11",
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.5"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

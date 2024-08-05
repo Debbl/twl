@@ -1,7 +1,3 @@
-import { twMerge } from "tailwind-merge";
-import type { ClassValue } from "clsx";
-import { clsx } from "clsx";
-
 export function prefix(prefix: string, input: string) {
   const cls = input.replaceAll("~", prefix).split(" ");
 
@@ -11,8 +7,3 @@ export function prefix(prefix: string, input: string) {
 export function isValidPrefix(selector: string) {
   return selector.endsWith(":");
 }
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-export { clsx, twMerge };
