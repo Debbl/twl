@@ -1,10 +1,9 @@
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "rollup";
 import alias from "@rollup/plugin-alias";
-
-import typescript from "@rollup/plugin-typescript";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import typescript from "@rollup/plugin-typescript";
+import { defineConfig } from "rollup";
 import dts from "rollup-plugin-dts";
 
 export default defineConfig([
