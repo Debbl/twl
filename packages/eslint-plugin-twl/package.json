@@ -2,7 +2,7 @@
   "name": "eslint-plugin-twl",
   "type": "module",
   "version": "0.0.0-alpha.6",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@9.15.5",
   "description": "",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "license": "MIT",
