@@ -34,7 +34,7 @@
     "@debbl/eslint-config": "^3.8.10",
     "@rollup/plugin-alias": "^5.1.1",
     "@rollup/plugin-commonjs": "^28.0.2",
-    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-typescript": "^12.1.2",
     "@types/node": "^22.13.0",
     "bumpp": "^10.0.1",
