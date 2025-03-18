@@ -1,5 +1,4 @@
 {
-  "name": "@twl/monorepo",
   "type": "module",
   "version": "0.0.0-alpha.7",
   "private": true,
