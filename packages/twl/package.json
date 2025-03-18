@@ -2,7 +2,7 @@
   "name": "twl",
   "type": "module",
   "version": "0.0.0-alpha.7",
-  "packageManager": "pnpm@9.15.5",
+  "packageManager": "pnpm@10.6.4",
   "description": "",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "license": "MIT",
@@ -16,12 +16,12 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
+      "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     }
   },
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
@@ -36,14 +36,12 @@
   ],
   "scripts": {
     "dev": "pnpm build && node ./dist/index.cjs",
-    "build": "rimraf dist && rollup -c --configPlugin typescript",
+    "build": "tsup",
     "test": "vitest",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.0.1"
+    "tailwind-merge": "^3.0.2"
   }
 }
