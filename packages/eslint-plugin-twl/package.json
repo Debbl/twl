@@ -9,7 +9,8 @@
   "homepage": "https://github.com/Debbl/twl#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Debbl/twl.git"
+    "url": "git+https://github.com/Debbl/twl.git",
+    "directory": "packages/eslint-plugin-twl"
   },
   "bugs": "https://github.com/Debbl/twl/issues",
   "keywords": [],
