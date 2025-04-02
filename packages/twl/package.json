@@ -2,7 +2,7 @@
   "name": "twl",
   "type": "module",
   "version": "0.0.0-alpha.7",
-  "packageManager": "pnpm@10.6.4",
+  "packageManager": "pnpm@10.7.1",
   "description": "",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "license": "MIT",
@@ -43,6 +43,6 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.0.2"
+    "tailwind-merge": "^3.1.0"
   }
 }

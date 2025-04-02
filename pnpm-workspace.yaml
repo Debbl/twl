@@ -2,3 +2,4 @@ packages:
   - packages/*
 onlyBuiltDependencies:
   - core-js
+  - simple-git-hooks
