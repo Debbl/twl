@@ -1,5 +1,9 @@
 packages:
   - packages/*
+
+ignoredBuiltDependencies:
+  - unrs-resolver
+
 onlyBuiltDependencies:
   - core-js
   - simple-git-hooks
