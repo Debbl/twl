@@ -15,11 +15,8 @@
   "bugs": "https://github.com/Debbl/twl/issues",
   "keywords": [],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -33,11 +30,12 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "dev": "pnpm build && node ./dist/index.cjs",
-    "build": "tsup",
+    "build": "tsdown",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
   },
