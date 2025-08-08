@@ -37,7 +37,7 @@
   ],
   "scripts": {
     "dev": "pnpm build && node ./dist/index.cjs",
-    "build": "tsup",
+    "build": "tsdown",
     "test": "vitest",
     "release": "pnpm build && bumpp && pnpm publish",
     "typecheck": "tsc --noEmit"

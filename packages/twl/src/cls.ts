@@ -1,16 +1,16 @@
-import { clsx } from "clsx";
-import type { ClassValue } from "clsx";
+import { clsx } from 'clsx'
+import type { ClassValue } from 'clsx'
 
 function normalizeStrings(strings: string[]) {
-  const lineCommentPattern = /\/\/.*((\r?\n)|$)/g;
+  const lineCommentPattern = /\/\/.*((\r?\n)|$)/g
 
-  let result = strings.join(" ");
+  let result = strings.join(' ')
 
-  if (result.includes("//")) {
-    result = result.replace(lineCommentPattern, "");
+  if (result.includes('//')) {
+    result = result.replace(lineCommentPattern, '')
   }
 
-  return result.replace(/\s+/g, " ").trim();
+  return result.replace(/\s+/g, ' ').trim()
 }
 
 export function cls(
@@ -18,10 +18,10 @@ export function cls(
   ...expressions: ClassValue[]
 ) {
   const classNamesList = strings.reduce((prev, current, currentIndex) => {
-    const expression = expressions[currentIndex] || "";
-    prev.push(current, clsx(expression));
-    return prev;
-  }, [] as string[]);
+    const expression = expressions[currentIndex] || ''
+    prev.push(current, clsx(expression))
+    return prev
+  }, [] as string[])
 
-  return normalizeStrings(classNamesList);
+  return normalizeStrings(classNamesList)
 }

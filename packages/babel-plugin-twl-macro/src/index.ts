@@ -1,3 +1,3 @@
-import cls from "./macro";
+import cls from './macro'
 
-export { cls };
+export { cls }

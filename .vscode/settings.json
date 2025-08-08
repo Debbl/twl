@@ -1,6 +1,4 @@
 {
   "eslint.useFlatConfig": true,
-  "cSpell.words": [
-    "tsdown"
-  ]
+  "cSpell.words": ["tsdown"]
 }
