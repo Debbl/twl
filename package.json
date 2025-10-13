@@ -34,7 +34,7 @@
     "@types/node": "^24.3.0",
     "bumpp": "^10.2.3",
     "eslint": "^9.37.0",
-    "lint-staged": "^16.1.6",
+    "lint-staged": "^16.2.4",
     "simple-git-hooks": "^2.13.1",
     "tsdown": "^0.15.6",
     "turbo": "^2.5.6",
