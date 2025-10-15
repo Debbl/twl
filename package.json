@@ -32,7 +32,7 @@
   "devDependencies": {
     "@debbl/eslint-config": "^3.12.2",
     "@types/node": "^24.3.0",
-    "bumpp": "^10.2.3",
+    "bumpp": "^10.3.1",
     "eslint": "^9.37.0",
     "lint-staged": "^16.2.4",
     "simple-git-hooks": "^2.13.1",
