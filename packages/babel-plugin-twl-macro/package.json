@@ -44,7 +44,7 @@
   "dependencies": {
     "@babel/core": "^7.28.4",
     "@babel/helper-plugin-utils": "^7.27.1",
-    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-env": "^7.28.5",
     "@babel/traverse": "^7.28.4",
     "@babel/types": "^7.28.4",
     "babel-plugin-macros": "^3.1.0",
