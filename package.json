@@ -39,7 +39,7 @@
     "tsdown": "^0.16.0",
     "turbo": "^2.5.8",
     "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
+    "vitest": "^4.0.8"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
