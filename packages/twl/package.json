@@ -2,7 +2,7 @@
   "name": "twl",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@10.14.0",
+  "packageManager": "pnpm@10.29.2",
   "description": "",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "license": "MIT",
@@ -15,11 +15,9 @@
   "bugs": "https://github.com/Debbl/twl/issues",
   "keywords": [],
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./dist/index.mjs",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "typesVersions": {
     "*": {
