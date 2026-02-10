@@ -15,11 +15,10 @@
   "bugs": "https://github.com/Debbl/twl/issues",
   "keywords": [],
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
+    ".": "./dist/index.mjs",
+    "./cls/macro": "./dist/cls/macro.mjs",
+    "./tw/macro": "./dist/tw/macro.mjs",
+    "./package.json": "./package.json"
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -42,7 +41,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "babel-plugin-macros": "^3.1.0",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.0.2"
+    "tailwind-merge": "^3.4.0"
+  },
+  "devDependencies": {
+    "@types/babel-plugin-macros": "^3.1.3"
   }
 }
