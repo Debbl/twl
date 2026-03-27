@@ -38,3 +38,8 @@ it('multiple lines with comments', () => {
   `
   expect(result).toMatchInlineSnapshot(`"text-sm bg-sky-500 font-bold"`)
 })
+
+it('adds spaces around adjacent expressions', () => {
+  const result = cls`flex${'items-center'}justify-center`
+  expect(result).toMatchInlineSnapshot(`"flex items-center justify-center"`)
+})

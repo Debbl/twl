@@ -1,0 +1,42 @@
+{
+  "name": "swc-plugin-twl-macro",
+  "type": "module",
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.29.2",
+  "description": "SWC plugin for transforming twl macros",
+  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
+  "license": "MIT",
+  "homepage": "https://github.com/Debbl/twl#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Debbl/twl.git",
+    "directory": "packages/swc-plugin-twl-macro"
+  },
+  "bugs": "https://github.com/Debbl/twl/issues",
+  "keywords": [
+    "swc-plugin",
+    "swc",
+    "tailwindcss",
+    "macro"
+  ],
+  "exports": {
+    ".": "./target/wasm32-wasip1/release/swc_plugin_twl_macro.wasm",
+    "./package.json": "./package.json"
+  },
+  "main": "./target/wasm32-wasip1/release/swc_plugin_twl_macro.wasm",
+  "files": [
+    "README.md",
+    "target/wasm32-wasip1/release/swc_plugin_twl_macro.wasm"
+  ],
+  "scripts": {
+    "build": "cargo build --target wasm32-wasip1 --release",
+    "test": "pnpm build && vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@swc/core": "^1.15.11",
+    "@types/node": "^25.2.2",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

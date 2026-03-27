@@ -2,3 +2,7 @@ dist
 node_modules
 .DS_Store
 .turbo
+.pnpm-store
+target
+.swc
+.next

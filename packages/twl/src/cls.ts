@@ -1,17 +1,6 @@
 import { clsx } from 'clsx'
+import { normalizeClassNameParts } from './normalize'
 import type { ClassValue } from 'clsx'
-
-function normalizeStrings(strings: string[]) {
-  const lineCommentPattern = /\/\/.*((\r?\n)|$)/g
-
-  let result = strings.join(' ')
-
-  if (result.includes('//')) {
-    result = result.replace(lineCommentPattern, '')
-  }
-
-  return result.replace(/\s+/g, ' ').trim()
-}
 
 export function cls(
   strings: TemplateStringsArray,
@@ -23,5 +12,5 @@ export function cls(
     return prev
   }, [] as string[])
 
-  return normalizeStrings(classNamesList)
+  return normalizeClassNameParts(classNamesList)
 }

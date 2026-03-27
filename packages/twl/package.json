@@ -15,27 +15,51 @@
   "bugs": "https://github.com/Debbl/twl/issues",
   "keywords": [],
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./macro": {
+      "types": "./macro/index.d.ts",
+      "default": "./macro/index.cjs"
+    },
     "./package.json": "./package.json"
   },
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.cts",
   "typesVersions": {
     "*": {
+      "macro": [
+        "./macro/index.d.ts"
+      ],
       "*": [
         "./dist/*",
-        "./dist/index.d.ts"
+        "./dist/index.d.mts"
       ]
     }
   },
   "files": [
     "dist",
-    "src"
+    "macro/"
   ],
   "scripts": {
     "dev": "pnpm build && node ./dist/index.cjs",
     "build": "tsdown",
     "test": "vitest",
     "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "babel-plugin-macros": "2 || 3",
+    "babel-plugin-twl-macro": "*"
+  },
+  "peerDependenciesMeta": {
+    "babel-plugin-macros": {
+      "optional": true
+    },
+    "babel-plugin-twl-macro": {
+      "optional": true
+    }
   },
   "dependencies": {
     "clsx": "^2.1.1",
