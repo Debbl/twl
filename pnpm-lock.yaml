@@ -111,15 +111,9 @@ importers:
       babel-plugin-twl-macro:
         specifier: '*'
         version: 0.0.0
-      clsx:
-        specifier: ^2.1.1
-        version: 2.1.1
       cnfast:
         specifier: ^0.1.0
         version: 0.1.0
-      tailwind-merge:
-        specifier: ^3.6.0
-        version: 3.6.0
 
   playground:
     dependencies:

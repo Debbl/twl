@@ -1,6 +1,6 @@
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from 'cnfast'
 import { cls } from './cls'
-import type { ClassValue } from 'clsx'
+import type { ClassValue } from 'cnfast'
 
 export function tw(
   strings: TemplateStringsArray,

@@ -1,6 +1,6 @@
-import { clsx } from 'clsx'
+import { clsx } from 'cnfast'
 import { normalizeClassNameParts } from './normalize'
-import type { ClassValue } from 'clsx'
+import type { ClassValue } from 'cnfast'
 
 export function cls(
   strings: TemplateStringsArray,

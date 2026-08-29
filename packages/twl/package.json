@@ -62,8 +62,6 @@
     }
   },
   "dependencies": {
-    "clsx": "^2.1.1",
-    "cnfast": "^0.1.0",
-    "tailwind-merge": "^3.6.0"
+    "cnfast": "^0.1.0"
   }
 }
