@@ -1,7 +1,7 @@
 {
   "name": "swc-plugin-twl-macro",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "packageManager": "pnpm@10.34.5",
   "description": "SWC plugin for transforming twl macros",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
