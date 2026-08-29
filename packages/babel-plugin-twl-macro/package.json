@@ -2,7 +2,7 @@
   "name": "babel-plugin-twl-macro",
   "type": "module",
   "version": "0.0.0",
-  "packageManager": "pnpm@10.29.2",
+  "packageManager": "pnpm@10.34.5",
   "description": "babel plugin for twl macro",
   "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "license": "MIT",
@@ -58,11 +58,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@babel/core": "^7.29.0",
-    "@babel/helper-plugin-utils": "^7.28.6",
-    "@babel/preset-env": "^7.29.0",
-    "@babel/traverse": "^7.29.0",
-    "@babel/types": "^7.29.0",
+    "@babel/core": "^7.29.7",
+    "@babel/helper-plugin-utils": "^7.29.7",
+    "@babel/preset-env": "^7.29.7",
+    "@babel/traverse": "^7.29.8",
+    "@babel/types": "^7.29.8",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-tester": "^12.0.0",
     "twl": "workspace:*"
