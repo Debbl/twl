@@ -50,7 +50,7 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "oxlint --fix"
+    "*": "oxlint --fix --no-error-on-unmatched-pattern"
   },
   "packageManager": "pnpm@10.34.5"
 }
