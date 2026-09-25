@@ -41,8 +41,11 @@ export function CodeBlock({
       </div>
 
       {/* `flex-1` so the shorter sample's pane still fills its card:
-          the two are the same height, and the code is top-aligned in both. */}
-      <ScrollArea.Root className={cls`min-w-0 flex-1 bg-(--syntax-background)`}>
+          the two are the same height, and the code is top-aligned in both.
+          `min-h-0` lets that pane shrink instead of forcing the card open. */}
+      <ScrollArea.Root
+        className={cls`min-h-0 min-w-0 flex-1 bg-(--syntax-background)`}
+      >
         <ScrollArea.Viewport
           className={cls`
             max-w-full overscroll-x-contain
