@@ -75,15 +75,17 @@ describe('input compiles to output', () => {
 describe('output matches the runtime', () => {
   for (const name of cases()) {
     it(name, async () => {
+      // A fixture that exports no value is there for its output alone, and
+      // importing it anyway would drag in whatever it renders with - the JSX
+      // one needs a React runtime this package has no reason to depend on.
+      if (!input(name).code.includes('export const result')) return
+
       const runtime = (await import(
         path.join(fixtures, name, 'input.tsx')
       )) as Record<string, unknown>
       const compiled = (await import(
         path.join(fixtures, name, 'output.tsx')
       )) as Record<string, unknown>
-
-      // A fixture that exports no value is there for its output alone.
-      if (!('result' in runtime)) return
 
       expect(compiled.result).toBeTypeOf('string')
       expect(classList(compiled.result)).toEqual(classList(runtime.result))

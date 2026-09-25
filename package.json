@@ -32,23 +32,19 @@
     "dev:website": "pnpm --filter @apps/website dev",
     "build:website": "pnpm --filter @apps/website build"
   },
-  "dependencies": {
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^3.6.0"
-  },
   "devDependencies": {
     "@clack/prompts": "^1.8.1",
     "@debbl/oxc-config": "^0.0.5",
-    "@types/node": "^25.9.5",
-    "bumpp": "^10.4.1",
-    "lint-staged": "^16.4.0",
+    "@types/node": "^26.6.2",
+    "bumpp": "^12.3.0",
+    "lint-staged": "^17.5.1",
     "oxfmt": "^0.70.0",
     "oxlint": "^1.85.0",
     "simple-git-hooks": "^2.14.0",
-    "tsdown": "^0.20.3",
-    "turbo": "^2.10.12",
+    "tsdown": "^0.23.0",
+    "turbo": "^2.11.4",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.11"
+    "vitest": "^5.0.2"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

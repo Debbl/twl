@@ -1,22 +1,30 @@
 @import 'tailwindcss';
 @import 'fumadocs-ui/css/neutral.css';
 @import 'fumadocs-ui/css/preset.css';
-@import 'microlighter/themes/github.css';
 
 html {
   scrollbar-gutter: stable;
 }
 
 /*
- * The syntax themes pick their colours with `light-dark()`, and Next's CSS
- * pipeline downlevels that to a `prefers-color-scheme` switch - so the code
- * block follows the operating system while the rest of the page follows the
- * theme toggle, and the two disagree half the time.
+ * The syntax palette, overriding microlighter's own.
  *
- * Re-state both palettes against the class next-themes sets, which is the one
- * signal that survives the downlevel. Values are GitHub's own, from the theme.
+ * The theme picks its colours with `light-dark()`, and Next's CSS pipeline
+ * downlevels that to a `prefers-color-scheme` switch - so the code block would
+ * follow the operating system while the rest of the page follows the theme
+ * toggle, and the two disagree half the time. The class next-themes sets is
+ * the one signal that survives the downlevel.
+ *
+ * Scoped through the attribute, not just the class, because the theme
+ * declares its variables on `[data-syntax-theme=github]` - the very element
+ * the code block sits on. A declaration on the element always beats one
+ * inherited from `<html>`, whatever its specificity, so `.dark` alone loses.
+ * Landing on the same element puts the two rules in the same comparison,
+ * which `.dark [data-syntax-theme]` then wins 0,2,0 to 0,1,0.
+ *
+ * Values are GitHub's, from the theme.
  */
-:root {
+html:not(.dark) [data-syntax-theme] {
   --syntax-background: #ffffff;
   --syntax-foreground: #24292f;
   --syntax-comment: #6e7781;
@@ -34,7 +42,7 @@ html {
   --syntax-deleted: #cf222e;
 }
 
-.dark {
+.dark [data-syntax-theme] {
   --syntax-background: #0d1117;
   --syntax-foreground: #c9d1d9;
   --syntax-comment: #8b949e;
@@ -50,11 +58,4 @@ html {
   --syntax-selector: #d2a8ff;
   --syntax-inserted: #7ee787;
   --syntax-deleted: #ff7b72;
-}
-
-/* The theme scopes its variables to the attribute; ours are on the root, so
-   the attribute must not shadow them back to the downlevelled values. */
-[data-syntax-theme='github'] {
-  --syntax-background: inherit;
-  --syntax-foreground: inherit;
 }

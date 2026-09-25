@@ -2,6 +2,7 @@
 
 import { highlightAll } from 'microlighter'
 import { useEffect, useRef } from 'react'
+import 'microlighter/themes/github.css'
 import type { ReactNode } from 'react'
 
 /**

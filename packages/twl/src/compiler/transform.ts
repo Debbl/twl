@@ -1,5 +1,5 @@
 import { twMerge } from 'cn'
-import MagicString from 'magic-string'
+import { MagicString } from 'magic-string'
 import { parseSync } from 'oxc-parser'
 import {
   declaredNames,

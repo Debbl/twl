@@ -96,9 +96,7 @@ export default function HomePage() {
       {/* Both blocks under one root: the highlight registry is global and a
           second pass would replace the first block's ranges. */}
       <HighlightRoot>
-        <div
-          className={cls`grid w-full items-start gap-4 text-left md:grid-cols-2`}
-        >
+        <div className={cls`grid w-full gap-4 text-left md:grid-cols-2`}>
           <CodeBlock label={t`What you write`}>{SOURCE}</CodeBlock>
           <CodeBlock label={t`What ships`}>{COMPILED}</CodeBlock>
         </div>

@@ -3,6 +3,14 @@ packages:
   - playground/*
   - apps/*
 
+# One copy of the React types for the whole workspace. Two of them make the
+# same component's props unassignable to itself - `Element` from one tree is
+# not the `ReactNode` of the other - and the error points at the consumer
+# rather than at the duplication.
+overrides:
+  '@types/react': ^19.3.0
+  '@types/react-dom': ^19.3.0
+
 ignoredBuiltDependencies:
   - unrs-resolver
 

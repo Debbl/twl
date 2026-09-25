@@ -177,12 +177,12 @@
   },
   "dependencies": {
     "cn": "^0.4.0",
-    "magic-string": "^0.30.21",
-    "oxc-parser": "^0.149.0",
-    "unplugin": "^2.3.11"
+    "magic-string": "^1.4.2",
+    "oxc-parser": "^0.151.0",
+    "unplugin": "^3.4.0"
   },
   "devDependencies": {
-    "esbuild": "^0.27.3"
+    "esbuild": "^0.28.2"
   },
   "peerDependencies": {
     "esbuild": ">=0.18",
