@@ -1,0 +1,60 @@
+---
+title: 介绍
+description: 把长长的 Tailwind 类名分行写、加注释，运行时一分钱不花。
+---
+
+长长的 `className` 挤在一行里既难读、在 diff 里也难 review。`twl` 让你把它拆开：
+
+```tsx
+import { cls } from 'twl/macro'
+
+;<button
+  className={cls`
+    // 布局
+    inline-flex shrink-0 items-center justify-center gap-2
+    whitespace-nowrap rounded-md
+    // 交互
+    cursor-pointer transition-[color,box-shadow] outline-none
+    disabled:pointer-events-none disabled:opacity-50
+    ${variant}
+  `}
+/>
+```
+
+空白会被折叠、`//` 注释会被剥掉，元素最终拿到的就是你手写单行时会写出的那个字符串。
+
+## 代价，以及编译器为什么存在
+
+放在运行时做，这份折叠并不免费——而且你越用力用这个特性，它越贵：
+
+| 模板                                | 运行时      | 编译后   |
+| ----------------------------------- | ----------- | -------- |
+| 6 个类名、单行                      | 210 ns      | 3.7 ns   |
+| 多行 + 1 条注释                     | 322 ns      | 3.7 ns   |
+| 真实按钮：18 行、6 条注释、3 处插值 | **1203 ns** | **4 ns** |
+
+而且换行和注释文本会**原样打进浏览器**——压缩器不知道 `cls` 是什么意思，折不掉。
+
+所以编译器的作用不是提供特性，而是**让这个特性免费**：配好打包器插件之后，上面那个模板会编译成一个普通字面量，那个文件里不会剩下任何 `twl`。
+
+## 安装
+
+```sh
+pnpm add twl
+```
+
+## 运行时
+
+```ts
+import { cls, cn, tw } from 'twl'
+
+cls`flex  items-center` // 'flex items-center'
+tw`p-2 p-4` // 'p-4'，冲突已合并
+cn('p-2', isActive && 'bg-blue-600') // clsx + tailwind-merge
+```
+
+`cls` 折叠空白、剥掉 `//` 行注释。注释只在 token 边界才算起点，所以
+`bg-[url(https://a.com/x.png)]` 和 `content-['//']` 不会被误伤。插值会过一遍
+`clsx`，因此对象、数组和 nullish 值的行为符合预期。
+
+`tw` 就是 `cls` 再加上 `tailwind-merge`。

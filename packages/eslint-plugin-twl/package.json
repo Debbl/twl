@@ -1,26 +1,21 @@
 {
   "name": "eslint-plugin-twl",
-  "type": "module",
   "version": "0.2.0",
-  "packageManager": "pnpm@10.34.5",
   "description": "",
-  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
-  "license": "MIT",
+  "keywords": [],
   "homepage": "https://github.com/Debbl/twl#readme",
+  "bugs": "https://github.com/Debbl/twl/issues",
+  "license": "MIT",
+  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Debbl/twl.git",
     "directory": "packages/eslint-plugin-twl"
   },
-  "bugs": "https://github.com/Debbl/twl/issues",
-  "keywords": [],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
-  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -32,14 +27,19 @@
       ]
     }
   },
-  "files": [
-    "dist"
-  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
   "scripts": {
     "dev": "pnpm build && node ./dist/index.cjs",
     "build": "tsdown",
     "test": "vitest",
     "release": "pnpm build && bumpp && pnpm publish",
     "typecheck": "tsc --noEmit"
-  }
+  },
+  "packageManager": "pnpm@10.34.5"
 }

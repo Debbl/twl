@@ -43,3 +43,15 @@ it('adds spaces around adjacent expressions', () => {
   const result = cls`flex${'items-center'}justify-center`
   expect(result).toMatchInlineSnapshot(`"flex items-center justify-center"`)
 })
+
+it('keeps arbitrary values that contain //', () => {
+  const result = cls`
+    // background
+    bg-[url(https://a.com/x.png)]
+    ${"content-['//']"}
+    underline
+  `
+  expect(result).toMatchInlineSnapshot(
+    `"bg-[url(https://a.com/x.png)] content-['//'] underline"`,
+  )
+})

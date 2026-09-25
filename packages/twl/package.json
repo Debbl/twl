@@ -1,67 +1,216 @@
 {
   "name": "twl",
-  "type": "module",
   "version": "0.2.0",
-  "packageManager": "pnpm@10.34.5",
-  "description": "",
-  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
-  "license": "MIT",
+  "description": "A TailwindCSS class name utility with a build-time compiler",
+  "keywords": [
+    "classnames",
+    "macro",
+    "oxc",
+    "tailwindcss",
+    "unplugin"
+  ],
   "homepage": "https://github.com/Debbl/twl#readme",
+  "bugs": "https://github.com/Debbl/twl/issues",
+  "license": "MIT",
+  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Debbl/twl.git",
     "directory": "packages/twl"
   },
-  "bugs": "https://github.com/Debbl/twl/issues",
-  "keywords": [],
-  "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
-    "./macro": {
-      "types": "./macro/index.d.ts",
-      "default": "./macro/index.cjs"
-    },
-    "./package.json": "./package.json"
-  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.cts",
+  "types": "./dist/index.d.mts",
   "typesVersions": {
     "*": {
-      "macro": [
-        "./macro/index.d.ts"
-      ],
       "*": [
         "./dist/*",
         "./dist/index.d.mts"
       ]
     }
   },
-  "files": [
-    "dist",
-    "macro/"
-  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./macro": {
+      "import": {
+        "types": "./dist/macro.d.mts",
+        "default": "./dist/macro.mjs"
+      },
+      "require": {
+        "types": "./dist/macro.d.cts",
+        "default": "./dist/macro.cjs"
+      }
+    },
+    "./compiler": {
+      "import": {
+        "types": "./dist/compiler.d.mts",
+        "default": "./dist/compiler.mjs"
+      },
+      "require": {
+        "types": "./dist/compiler.d.cts",
+        "default": "./dist/compiler.cjs"
+      }
+    },
+    "./unplugin": {
+      "import": {
+        "types": "./dist/unplugin.d.mts",
+        "default": "./dist/unplugin.mjs"
+      },
+      "require": {
+        "types": "./dist/unplugin.d.cts",
+        "default": "./dist/unplugin.cjs"
+      }
+    },
+    "./vite": {
+      "import": {
+        "types": "./dist/vite.d.mts",
+        "default": "./dist/vite.mjs"
+      },
+      "require": {
+        "types": "./dist/vite.d.cts",
+        "default": "./dist/vite.cjs"
+      }
+    },
+    "./rollup": {
+      "import": {
+        "types": "./dist/rollup.d.mts",
+        "default": "./dist/rollup.mjs"
+      },
+      "require": {
+        "types": "./dist/rollup.d.cts",
+        "default": "./dist/rollup.cjs"
+      }
+    },
+    "./rolldown": {
+      "import": {
+        "types": "./dist/rolldown.d.mts",
+        "default": "./dist/rolldown.mjs"
+      },
+      "require": {
+        "types": "./dist/rolldown.d.cts",
+        "default": "./dist/rolldown.cjs"
+      }
+    },
+    "./webpack": {
+      "import": {
+        "types": "./dist/webpack.d.mts",
+        "default": "./dist/webpack.mjs"
+      },
+      "require": {
+        "types": "./dist/webpack.d.cts",
+        "default": "./dist/webpack.cjs"
+      }
+    },
+    "./rspack": {
+      "import": {
+        "types": "./dist/rspack.d.mts",
+        "default": "./dist/rspack.mjs"
+      },
+      "require": {
+        "types": "./dist/rspack.d.cts",
+        "default": "./dist/rspack.cjs"
+      }
+    },
+    "./esbuild": {
+      "import": {
+        "types": "./dist/esbuild.d.mts",
+        "default": "./dist/esbuild.mjs"
+      },
+      "require": {
+        "types": "./dist/esbuild.d.cts",
+        "default": "./dist/esbuild.cjs"
+      }
+    },
+    "./farm": {
+      "import": {
+        "types": "./dist/farm.d.mts",
+        "default": "./dist/farm.mjs"
+      },
+      "require": {
+        "types": "./dist/farm.d.cts",
+        "default": "./dist/farm.cjs"
+      }
+    },
+    "./next": {
+      "import": {
+        "types": "./dist/next.d.mts",
+        "default": "./dist/next.mjs"
+      },
+      "require": {
+        "types": "./dist/next.d.cts",
+        "default": "./dist/next.cjs"
+      }
+    },
+    "./next/loader": {
+      "import": {
+        "types": "./dist/next-loader.d.mts",
+        "default": "./dist/next-loader.mjs"
+      },
+      "require": {
+        "types": "./dist/next-loader.d.cts",
+        "default": "./dist/next-loader.cjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
     "dev": "pnpm build && node ./dist/index.cjs",
     "build": "tsdown",
     "test": "vitest",
+    "spike": "pnpm build && node ./spike/run.mjs",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "cn": "^0.4.0",
+    "magic-string": "^0.30.21",
+    "oxc-parser": "^0.149.0",
+    "unplugin": "^2.3.11"
+  },
+  "devDependencies": {
+    "esbuild": "^0.27.3"
+  },
   "peerDependencies": {
-    "babel-plugin-macros": "2 || 3",
-    "babel-plugin-twl-macro": "*"
+    "esbuild": ">=0.18",
+    "next": ">=15",
+    "rolldown": ">=1",
+    "rollup": ">=3",
+    "vite": ">=5",
+    "webpack": ">=5"
   },
   "peerDependenciesMeta": {
-    "babel-plugin-macros": {
+    "esbuild": {
       "optional": true
     },
-    "babel-plugin-twl-macro": {
+    "next": {
+      "optional": true
+    },
+    "rolldown": {
+      "optional": true
+    },
+    "rollup": {
+      "optional": true
+    },
+    "vite": {
+      "optional": true
+    },
+    "webpack": {
       "optional": true
     }
   },
-  "dependencies": {
-    "cnfast": "^0.1.0"
-  }
+  "packageManager": "pnpm@10.34.5"
 }

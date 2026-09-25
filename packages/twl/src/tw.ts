@@ -1,6 +1,6 @@
-import { twMerge } from 'cnfast'
+import { twMerge } from 'cn'
 import { cls } from './cls'
-import type { ClassValue } from 'cnfast'
+import type { ClassValue } from 'cn'
 
 export function tw(
   strings: TemplateStringsArray,

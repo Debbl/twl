@@ -38,3 +38,14 @@ it('multiple lines with comments', () => {
   `
   expect(result).toMatchInlineSnapshot(`"bg-sky-500 font-bold text-lg"`)
 })
+
+it('keeps arbitrary values that contain //', () => {
+  const result = tw`
+    // background
+    bg-[url(https://a.com/x.png)]
+    underline
+  `
+  expect(result).toMatchInlineSnapshot(
+    `"bg-[url(https://a.com/x.png)] underline"`,
+  )
+})

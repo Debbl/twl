@@ -1,19 +1,32 @@
 {
   "name": "babel-plugin-twl-macro",
-  "type": "module",
   "version": "0.2.0",
-  "packageManager": "pnpm@10.34.5",
   "description": "babel plugin for twl macro",
-  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
-  "license": "MIT",
+  "keywords": [],
   "homepage": "https://github.com/Debbl/twl#readme",
+  "bugs": "https://github.com/Debbl/twl/issues",
+  "license": "MIT",
+  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Debbl/twl.git",
     "directory": "packages/babel-plugin-twl-macro"
   },
-  "bugs": "https://github.com/Debbl/twl/issues",
-  "keywords": [],
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./dist/index.d.mts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "import": {
@@ -37,20 +50,6 @@
     },
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.mts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.mts"
-      ]
-    }
-  },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "dev": "pnpm build && node ./dist/index.cjs",
     "build": "tsdown",
@@ -72,5 +71,6 @@
     "@types/babel__core": "^7.20.5",
     "@types/babel__helper-plugin-utils": "^7.10.3",
     "@types/babel__traverse": "^7.28.0"
-  }
+  },
+  "packageManager": "pnpm@10.34.5"
 }

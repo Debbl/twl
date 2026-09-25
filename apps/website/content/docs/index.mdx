@@ -1,0 +1,67 @@
+---
+title: Introduction
+description: Write long Tailwind class names across several lines, with comments, and pay nothing for it at runtime.
+---
+
+A long `className` is hard to read on one line and hard to review in a diff.
+`twl` lets you break it up:
+
+```tsx
+import { cls } from 'twl/macro'
+
+;<button
+  className={cls`
+    // layout
+    inline-flex shrink-0 items-center justify-center gap-2
+    whitespace-nowrap rounded-md
+    // interaction
+    cursor-pointer transition-[color,box-shadow] outline-none
+    disabled:pointer-events-none disabled:opacity-50
+    ${variant}
+  `}
+/>
+```
+
+Whitespace is collapsed and `//` comments are stripped, so the element receives
+the same string you would have written by hand.
+
+## The cost, and why the compiler exists
+
+Done at runtime, that folding is not free — and it gets more expensive the more
+you use the feature:
+
+| Template                                              | Runtime     | Compiled |
+| ----------------------------------------------------- | ----------- | -------- |
+| six class names, one line                             | 210 ns      | 3.7 ns   |
+| multi-line with one comment                           | 322 ns      | 3.7 ns   |
+| a real button: 18 lines, 6 comments, 3 interpolations | **1203 ns** | **4 ns** |
+
+The newlines and the comment text also ship to the browser, because a minifier
+cannot know what `cls` means.
+
+So the compiler's job is not to add a feature. It is to make the feature free:
+with a bundler plugin configured, the template above compiles to a plain
+literal, and nothing of `twl` is left in that file.
+
+## Install
+
+```sh
+pnpm add twl
+```
+
+## Runtime
+
+```ts
+import { cls, cn, tw } from 'twl'
+
+cls`flex  items-center` // 'flex items-center'
+tw`p-2 p-4` // 'p-4', conflicts merged
+cn('p-2', isActive && 'bg-blue-600') // clsx + tailwind-merge
+```
+
+`cls` folds whitespace and strips `//` line comments. A `//` only starts a
+comment at a token boundary, so `bg-[url(https://a.com/x.png)]` and
+`content-['//']` are left alone. Interpolations go through `clsx`, so objects,
+arrays and nullish values behave as you would expect.
+
+`tw` is `cls` plus `tailwind-merge`.

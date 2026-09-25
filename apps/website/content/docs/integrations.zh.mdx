@@ -1,0 +1,45 @@
+---
+title: 集成
+description: 每个打包器一个插件，Turbopack 单独一份。
+---
+
+## Vite
+
+```ts
+// vite.config.ts
+import twl from 'twl/vite'
+
+export default { plugins: [twl()] }
+```
+
+unplugin 覆盖的打包器都有对应入口：`twl/rollup`、`twl/rolldown`、`twl/webpack`、
+`twl/rspack`、`twl/esbuild`、`twl/farm`。想自己包一层的话，`twl/unplugin` 导出的是
+原始 factory。
+
+## Next.js
+
+Turbopack 没有插件 API，只接受在配置里注册的 webpack 形状 loader，所以它是唯一一个
+走不了 unplugin 的打包器。它有自己的一份集成，会把同一个 loader 同时注册到 Turbopack
+和 webpack 上：
+
+```ts
+// next.config.ts
+import { withTwl } from 'twl/next'
+
+export default withTwl()({ reactCompiler: true })
+```
+
+`withTwl` 原样返回你自己的 config 类型，所以能和别的 wrapper 串起来：
+
+```ts
+export default withTwl()(withMDX(nextConfig))
+```
+
+所有宏类型的 Next 插件匹配的扩展名集合都一样，也就是说两个插件会写到同一条 Turbopack
+规则上。`withTwl` 是把自己的 loader **追加**进那条规则，而不是替换——替换会把另一个
+插件的 loader 弄丢，而且不会有任何报错。
+
+## 不装插件
+
+`twl/macro` 导出的就是真实运行时，所以没被编译的代码照样能跑：测试、脚本、Storybook
+都正常工作，差别只在开销。

@@ -1,0 +1,79 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/app/[locale]/(home)/page.tsx:44
+msgid "Newlines and comments"
+msgstr "换行与注释"
+
+#: src/app/[locale]/(home)/page.tsx:45
+msgid ""
+"Group class names the way you think about them, annotate the groups, and "
+"let the compiler fold it all into one string."
+msgstr "按你思考的方式给类名分组、给每组加注释，剩下的交给编译器折成一个字符串。"
+
+#: src/app/[locale]/(home)/page.tsx:48
+msgid "Nothing left at runtime"
+msgstr "运行时什么都不剩"
+
+#: src/app/[locale]/(home)/page.tsx:49
+msgid ""
+"A static template becomes a string literal. A static tw template has its "
+"tailwind-merge resolved at build time too."
+msgstr "静态模板会变成字符串字面量；静态的 tw 模板连 tailwind-merge 都在编译期算完。"
+
+#: src/app/[locale]/(home)/page.tsx:52
+msgid "Works without the plugin"
+msgstr "没装插件也能跑"
+
+#: src/app/[locale]/(home)/page.tsx:53
+msgid ""
+"The macro entry exports the real runtime, so tests and scripts keep "
+"working. Only the cost differs."
+msgstr "macro 入口导出的就是真实运行时，测试和脚本照常工作，差的只是开销。"
+
+#: src/app/[locale]/(home)/page.tsx:56
+msgid "Every bundler"
+msgstr "所有打包器"
+
+#: src/app/[locale]/(home)/page.tsx:57
+msgid ""
+"Vite, Rollup, Rolldown, webpack, Rspack, esbuild and Farm through unplugin "
+"— and Turbopack through its own loader."
+msgstr ""
+"Vite、Rollup、Rolldown、webpack、Rspack、esbuild 和 Farm 走 unplugin，Turbopack "
+"走它自己的 loader。"
+
+#: src/app/[locale]/(home)/page.tsx:78
+#: src/app/[locale]/layout.tsx:20
+msgid ""
+"Write long Tailwind class names across several lines, with comments, and "
+"pay nothing for it at runtime."
+msgstr "把长长的 Tailwind 类名分行写、加注释，运行时一分钱不花。"
+
+#: src/app/[locale]/(home)/page.tsx:91
+msgid "Get started"
+msgstr "开始使用"
+
+#: src/app/[locale]/(home)/page.tsx:102
+msgid "What you write"
+msgstr "你写的"
+
+#: src/app/[locale]/(home)/page.tsx:103
+msgid "What ships"
+msgstr "真正发布的"
+
+#: src/app/[locale]/(home)/page.tsx:138
+msgid ""
+"This page is built with <TwlRepo>twl</TwlRepo> and "
+"<BestI18nRepo>best-i18n</BestI18nRepo>. Every class name on it was folded "
+"at build time, and every string above was inlined for this locale."
+msgstr ""
+"这个页面由 <TwlRepo>twl</TwlRepo> 和 <BestI18nRepo>best-i18n</BestI18nRepo> "
+"构建。页面上的每个类名都在编译期折叠完成，上面每句文案也都为当前语言内联好了。"

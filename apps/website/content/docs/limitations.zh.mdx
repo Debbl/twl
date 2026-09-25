@@ -1,0 +1,31 @@
+---
+title: 限制
+description: 确实存在的差异，直说。
+---
+
+## 空插值会留下一个空格
+
+插值求值之后不会再归一化，所以结果为空的插值会留下原本用来分隔它的那个空格：
+
+```ts
+cls`flex ${maybeEmpty} p-2`
+// 运行时：  'flex p-2'
+// 编译后：  'flex  p-2'
+```
+
+类名列表是一样的——DOM 和 Tailwind 读的就只是这个——但字符串不同。`tw` 不受影响：
+`tailwind-merge` 会按空白切分再用单空格拼回去，两条路径的输出都是归一化的。
+
+## prettier-plugin-tailwindcss 会把这些模板压平
+
+`prettier-plugin-tailwindcss` 会给 `className` 里任何模板字面量排序，跟 tag 是什么无关。
+对多行模板来说，这意味着换行被压掉、注释被挪到最前面，离开它原本标注的那几个类。
+开 `tailwindPreserveWhitespace` 能保住行的形状，但 token 仍会跨行重排。
+
+目前没有任何配置能让两者共存。逐处加 `// prettier-ignore` 是唯一的出口，或者干脆不用
+那个插件。
+
+## 运行时也读不了的模板
+
+含有无法 cook 的转义的模板——比如 `` cls`\unicode` ``——会被原样保留。运行时同样读不了它，
+乱猜比什么都不做更糟。

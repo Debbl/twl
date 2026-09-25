@@ -1,41 +1,49 @@
 {
   "name": "twl-monorepo",
-  "type": "module",
   "version": "0.2.0",
   "private": true,
-  "packageManager": "pnpm@10.34.5",
   "description": "A TailwindCSS utility library.",
-  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
-  "license": "MIT",
+  "keywords": [
+    "css",
+    "tailwindcss",
+    "utility"
+  ],
   "homepage": "https://github.com/Debbl/twl#readme",
+  "bugs": "https://github.com/Debbl/twl/issues",
+  "license": "MIT",
+  "author": "Brendan Dash <me@aiwan.run> (https://aiwan.run)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Debbl/twl.git"
   },
-  "bugs": "https://github.com/Debbl/twl/issues",
-  "keywords": [
-    "tailwindcss",
-    "utility",
-    "css"
-  ],
+  "type": "module",
   "scripts": {
     "build": "turbo build",
     "test": "turbo test",
     "typecheck": "turbo typecheck",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
-    "release": "bumpp -r && pnpm publish -r"
+    "spike": "pnpm --filter twl spike",
+    "bench": "node ./scripts/bench-size.mjs",
+    "play": "node ./scripts/play.mjs",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "release": "bumpp -r && pnpm publish -r",
+    "dev:website": "pnpm --filter @apps/website dev",
+    "build:website": "pnpm --filter @apps/website build"
   },
   "dependencies": {
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
-    "@debbl/eslint-config": "^3.17.3",
+    "@clack/prompts": "^1.8.1",
+    "@debbl/oxc-config": "^0.0.5",
     "@types/node": "^25.9.5",
     "bumpp": "^10.4.1",
-    "eslint": "9.39.2",
     "lint-staged": "^16.4.0",
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0",
     "simple-git-hooks": "^2.14.0",
     "tsdown": "^0.20.3",
     "turbo": "^2.10.12",
@@ -46,6 +54,7 @@
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --fix"
-  }
+    "*": "oxlint --fix"
+  },
+  "packageManager": "pnpm@10.34.5"
 }

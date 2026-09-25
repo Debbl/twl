@@ -1,0 +1,36 @@
+---
+title: Limitations
+description: The differences that are real, stated plainly.
+---
+
+## Empty interpolations leave a space
+
+An interpolation is not re-normalized once it has a value, so one that
+evaluates to nothing leaves behind the space that separated it:
+
+```ts
+cls`flex ${maybeEmpty} p-2`
+// runtime:  'flex p-2'
+// compiled: 'flex  p-2'
+```
+
+The class list is the same, which is all the DOM and Tailwind read, but the
+string differs. `tw` is not affected: `tailwind-merge` splits on whitespace and
+joins with single spaces, so its output is normalized either way.
+
+## prettier-plugin-tailwindcss flattens these templates
+
+`prettier-plugin-tailwindcss` sorts class names inside any template literal it
+finds in a `className`, regardless of the tag. On a multi-line template that
+means the newlines are collapsed and the comments are moved to the front, away
+from the classes they annotated. `tailwindPreserveWhitespace` keeps the shape of
+the lines but still reorders tokens across them.
+
+There is no setting that makes the two work together today. `// prettier-ignore`
+on the attribute is the escape hatch, or leave the plugin out.
+
+## Templates the runtime cannot read either
+
+A template containing an escape that has no cooked value — `` cls`\unicode` `` —
+is left alone. The runtime cannot read it either, so guessing would be worse
+than doing nothing.

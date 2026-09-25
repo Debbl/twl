@@ -1,0 +1,47 @@
+---
+title: Compiler
+description: What the compiler emits, and what it refuses to compile.
+---
+
+Import from `twl/macro` instead of `twl`, then configure the plugin for your
+bundler. Every `cls` and `tw` template compiles to a literal.
+
+## What it emits
+
+| Input                               | Output                                            |
+| ----------------------------------- | ------------------------------------------------- |
+| ``cls`flex  items-center` ``        | `"flex items-center"`                             |
+| ``cls`flex ${className}` ``         | `` `flex ${__twl_clsx(className)}` ``             |
+| ``cls`flex ${a ? 'ring-2' : ''}` `` | `` `flex ${a ? 'ring-2' : ''}` ``                 |
+| ``tw`px-2 py-1 px-4` ``             | `"py-1 px-4"` — merged at build time              |
+| ``tw`px-2 ${override}` ``           | ``__twl_twMerge(`px-2 ${__twl_clsx(override)}`)`` |
+
+An interpolation is wrapped in `clsx` unless it is provably a string already —
+a string literal, a template literal, a conditional whose branches are both
+strings, or a `+` with a string on one side. The runtime passes every
+interpolation through `clsx`, so an object or an array becomes a class list
+rather than `[object Object]`; the compiled output has to do the same.
+
+A `tw` template with no interpolation has its merge resolved at build time.
+`tw` is wired to one fixed `twMerge` with no configuration a user could change,
+so merging then is the same as merging at runtime.
+
+## What it refuses
+
+Importing from `twl/macro` is a promise that the template will be compiled, so
+the compiler is strict about anything that would break that promise. Each of
+these is a build error with a file and a line, not something that quietly
+reaches the runtime:
+
+- a reference that is not a template tag, such as `const f = cls`
+- a local binding that shadows the import
+- `import * as twl from 'twl/macro'`
+- an interpolation that sits inside a `//` comment, where it would be dropped
+
+## Options
+
+| Option    | Default             |                                                                                                                                         |
+| --------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `from`    | `['twl/macro']`     | Module specifiers whose `cls` and `tw` compile away. Add `'twl'` to compile the runtime entry too, at the price of the guarantee above. |
+| `include` | `/\.[cm]?[jt]sx?$/` | Files to compile. Not read by `twl/next`, which matches by its own rule.                                                                |
+| `exclude` | `/node_modules/`    | Dependencies ship compiled code already.                                                                                                |

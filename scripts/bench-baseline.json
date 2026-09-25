@@ -1,0 +1,30 @@
+{
+  "recordedAt": "2026-09-22",
+  "node": "v24.13.0",
+  "versions": {
+    "twl": "0.2.0",
+    "next": "^16.1.6"
+  },
+  "variants": {
+    "compiled": {
+      "gzip": 258066,
+      "raw": 844956,
+      "files": 9,
+      "pages": {
+        "_global-error.html": 184999,
+        "_not-found.html": 242885,
+        "index.html": 258066
+      }
+    },
+    "runtime": {
+      "gzip": 258135,
+      "raw": 845276,
+      "files": 9,
+      "pages": {
+        "_global-error.html": 184999,
+        "_not-found.html": 242885,
+        "index.html": 258135
+      }
+    }
+  }
+}

@@ -138,4 +138,20 @@ describe('twl macro', () => {
       'className={"size-16 rounded-md border bg-blue-600"}',
     )
   })
+
+  it('keeps arbitrary values that contain //', () => {
+    const input = `
+      const result = cls\`
+        // background
+        bg-[url(https://a.com/x.png)]
+        underline
+      \`;
+    `
+
+    const output = transform(input)
+
+    expect(normalizeCode(output)).toMatchInlineSnapshot(
+      `"const result = "bg-[url(https://a.com/x.png)] underline";"`,
+    )
+  })
 })

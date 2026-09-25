@@ -1,0 +1,48 @@
+---
+title: Integrations
+description: One plugin per bundler, and a dedicated one for Turbopack.
+---
+
+## Vite
+
+```ts
+// vite.config.ts
+import twl from 'twl/vite'
+
+export default { plugins: [twl()] }
+```
+
+The same factory is published for every bundler unplugin covers: `twl/rollup`,
+`twl/rolldown`, `twl/webpack`, `twl/rspack`, `twl/esbuild` and `twl/farm`.
+`twl/unplugin` exports the raw factory if you need to wrap it yourself.
+
+## Next.js
+
+Turbopack has no plugin API and only accepts webpack-shaped loaders registered
+in the config, so it is the one bundler this cannot reach through unplugin. It
+gets its own integration, which registers the same loader on Turbopack and
+webpack alike:
+
+```ts
+// next.config.ts
+import { withTwl } from 'twl/next'
+
+export default withTwl()({ reactCompiler: true })
+```
+
+`withTwl` hands your own config type straight back, so it composes with other
+wrappers:
+
+```ts
+export default withTwl()(withMDX(nextConfig))
+```
+
+Every macro-style Next plugin matches the same set of extensions, which means
+two of them write the same Turbopack rule. `withTwl` adds its loader to that
+rule rather than replacing it — replacing would drop the other plugin's loader
+with no error to show for it.
+
+## Without a plugin
+
+`twl/macro` exports the real runtime, so code that is never compiled still
+works: tests, scripts and Storybook keep running, and only the cost differs.
