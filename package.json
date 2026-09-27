@@ -18,9 +18,9 @@
   },
   "type": "module",
   "scripts": {
-    "build": "turbo build",
-    "test": "turbo test",
-    "typecheck": "turbo typecheck",
+    "build": "turbo build --filter=twl",
+    "test": "turbo test --filter=twl",
+    "typecheck": "turbo typecheck --filter=twl",
     "spike": "pnpm --filter twl spike",
     "bench": "node ./scripts/bench-size.mjs",
     "play": "node ./scripts/play.mjs",

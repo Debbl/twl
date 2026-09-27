@@ -119,8 +119,9 @@ describe('rejected', () => {
       const compile = () => transform(readFileSync(file, 'utf8'), file)
 
       expect(compile).toThrow(expected[name]!)
-      // A diagnostic without a position is not actionable.
-      expect(compile).toThrow(/errors\/.+\.tsx:\d+ /)
+      // A diagnostic without a position is not actionable. The filename is
+      // whatever the caller passed, so the separator follows the platform.
+      expect(compile).toThrow(/errors[/\\].+\.tsx:\d+ /)
     })
   }
 })
@@ -139,7 +140,8 @@ describe('output shape', () => {
     const { map } = transform(code, file)!
 
     expect(map.version).toBe(3)
-    expect(map.sources).toEqual([file])
+    // magic-string joins source paths with `/`, which source maps use.
+    expect(map.sources).toEqual([file.replaceAll('\\', '/')])
     expect(map.mappings.length).toBeGreaterThan(0)
   })
 })
