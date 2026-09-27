@@ -77,7 +77,9 @@ describe.each(['cn', 'clsx', 'twMerge'] as const)('%s compilation', (name) => {
   it('preserves ordinary calls beside compiled templates', () => {
     const source = `import { ${name} as tag } from 'twl/macro'\nexport const a = tag('p-2', 'p-4')\nexport const b = tag\`p-2 p-4\``
     const result = transform(source, 'test.ts')
-    expect(result?.code).toContain(`import { ${name} as tag } from 'twl/runtime'`)
+    expect(result?.code).toContain(
+      `import { ${name} as tag } from 'twl/runtime'`,
+    )
     expect(result?.code).toContain("tag('p-2', 'p-4')")
     expect(result?.code).not.toContain('tag`')
   })
