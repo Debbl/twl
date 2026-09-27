@@ -1,6 +1,6 @@
 {
   "name": "playground-nextjs",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "description": "Next.js + Turbopack, compiled through twl/next",
   "homepage": "https://github.com/Debbl/starter-next-app",
