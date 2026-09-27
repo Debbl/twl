@@ -1,5 +1,5 @@
 import * as motion from 'motion/react-m'
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 import { ThemeSwitcher } from '~/components/theme-switcher'
 import Counter from './components/counter'
 
@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <main
-      className={cls`
+      className={cn`
         flex
         h-full
         flex-col
@@ -18,7 +18,7 @@ export default function Home() {
       `}
     >
       <motion.div
-        className={cls`
+        className={cn`
           size-16
           rounded-md
           border

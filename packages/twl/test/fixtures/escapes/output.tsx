@@ -1,5 +1,5 @@
-import { clsx as __twl_clsx } from 'twl';
+import { cn as __twl_cn } from 'twl/runtime';
 
 const extra = 'flex'
 
-export const result = `content-['\\2014'] ${__twl_clsx(extra)}`
+export const result = __twl_cn("content-['\\2014']", extra)

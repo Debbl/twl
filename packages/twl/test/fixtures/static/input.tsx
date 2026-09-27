@@ -1,3 +1,3 @@
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
-export const result = cls`flex items-center justify-center`
+export const result = cn`flex items-center justify-center`

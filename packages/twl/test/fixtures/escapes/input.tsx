@@ -1,5 +1,5 @@
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
 const extra = 'flex'
 
-export const result = cls`content-['\\2014'] ${extra}`
+export const result = cn`content-['\\2014'] ${extra}`

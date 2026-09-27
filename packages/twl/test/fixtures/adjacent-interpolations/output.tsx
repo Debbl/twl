@@ -1,5 +1,5 @@
-import { clsx as __twl_clsx } from 'twl';
+import { cn as __twl_cn } from 'twl/runtime';
 
 const a = 'items-center'
 
-export const result = `flex ${__twl_clsx(a)} justify-center`
+export const result = __twl_cn("flex", a, "justify-center")

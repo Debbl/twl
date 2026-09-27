@@ -1,7 +1,7 @@
 {
   "name": "twl",
   "version": "0.3.0",
-  "description": "A TailwindCSS class name utility with a build-time compiler",
+  "description": "The cn API with macro compilation for Tailwind class names",
   "keywords": [
     "classnames",
     "macro",
@@ -54,6 +54,16 @@
       "require": {
         "types": "./dist/macro.d.cts",
         "default": "./dist/macro.cjs"
+      }
+    },
+    "./runtime": {
+      "import": {
+        "types": "./dist/runtime.d.mts",
+        "default": "./dist/runtime.mjs"
+      },
+      "require": {
+        "types": "./dist/runtime.d.cts",
+        "default": "./dist/runtime.cjs"
       }
     },
     "./compiler": {

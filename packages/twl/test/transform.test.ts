@@ -7,8 +7,8 @@ import type { TransformOptions } from '../src/compiler'
 
 /**
  * Fixtures are directories holding an `input.tsx` and the `output.tsx` it
- * compiles to. Both are real modules: the input imports `cls` from
- * `twl/macro`, which the test config points at the runtime, and the output is
+ * compiles to. Both are real modules: the input imports `cn` from
+ * `twl/cn`, which the test config points at the runtime, and the output is
  * the compiled file committed next to it. That makes a change in what the
  * compiler emits show up as a diff of real code, and it lets the parity test
  * below execute both halves rather than compare strings.
@@ -90,12 +90,7 @@ describe('output matches the runtime', () => {
       expect(compiled.result).toBeTypeOf('string')
       expect(classList(compiled.result)).toEqual(classList(runtime.result))
 
-      // An interpolation is not re-normalized once it has a value, so one that
-      // evaluates to nothing leaves behind the space that separated it. That
-      // is the single accepted difference; everything else has to be exact.
-      if (!input(name).code.includes('${')) {
-        expect(compiled.result).toBe(runtime.result)
-      }
+      expect(compiled.result).toBe(runtime.result)
     })
   }
 })
@@ -112,9 +107,9 @@ describe('files left alone', () => {
 
 describe('rejected', () => {
   const expected: Record<string, RegExp> = {
-    'namespace-import.tsx': /Import `cls` or `tw` by name instead/,
+    'unreadable-escape.tsx': /invalid escape/,
+    'namespace-import.tsx': /Import `cn`, `clsx`, or `twMerge` by name instead/,
     'shadowed-binding.tsx': /Rename one of them/,
-    'not-a-tag.tsx': /can only be used as a template tag/,
     'interpolation-in-comment.tsx': /sits inside a `\/\/` comment/,
   }
 

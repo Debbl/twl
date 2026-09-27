@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { normalizeClassNameParts } from '../src'
+import { normalizeClassNameParts } from '../src/normalize'
 
 describe('whitespace', () => {
   it('collapses runs of spaces and newlines', () => {

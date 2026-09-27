@@ -5,7 +5,7 @@ import twlLoader from '../src/integrations/next/loader'
 import vite from '../src/integrations/vite'
 
 const SOURCE =
-  "import { cls } from 'twl/macro'\nexport const a = cls`flex  items-center`\n"
+  "import { cn } from 'twl/macro'\nexport const a = cn`flex  items-center`\n"
 
 interface NextConfigParts {
   turbopack?: { rules?: Record<string, unknown> }
@@ -43,7 +43,7 @@ describe('unplugin', () => {
   })
 
   it('honours the from option', async () => {
-    const plugin = vite({ from: ['twl/macro', 'twl'] }) as {
+    const plugin = vite({ from: ['twl/macro', 'custom/macros'] }) as {
       transform: unknown
     }
     const hook = plugin.transform as
@@ -57,7 +57,7 @@ describe('unplugin', () => {
     const run = typeof hook === 'function' ? hook : hook.handler
     const result = await run.call(
       {} as never,
-      "import { cls } from 'twl'\nexport const a = cls`flex  items-center`\n",
+      "import { cn } from 'custom/macros'\nexport const a = cn`flex  items-center`\n",
       '/app/a.tsx',
     )
 
@@ -103,10 +103,10 @@ describe('next loader', () => {
 
   it('reports a compile error instead of throwing', async () => {
     const { error } = await run(
-      "import { cls } from 'twl/macro'\nexport const a = cls\n",
+      "import { cn } from 'twl/macro'\nfunction test(cn) { return cn }\nexport const a = cn`flex`\n",
     )
 
-    expect(error?.message).toMatch(/can only be used as a template tag/)
+    expect(error?.message).toMatch(/Rename one of them/)
   })
 })
 
@@ -182,14 +182,15 @@ describe('withTwl', () => {
   })
 
   it('passes compiler options through to the loader', () => {
-    const rules = withTwl({ from: ['twl/macro', 'twl'] })({} as NextConfigParts)
-      .turbopack?.rules as Record<
+    const rules = withTwl({ from: ['twl/macro', 'custom/macros'] })(
+      {} as NextConfigParts,
+    ).turbopack?.rules as Record<
       string,
       { loaders: Array<{ options: Record<string, unknown> }> }
     >
     const { options } = rules['*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}']!.loaders[0]!
 
-    expect(options.from).toEqual(['twl/macro', 'twl'])
+    expect(options.from).toEqual(['twl/macro', 'custom/macros'])
   })
 
   it('drops options turbopack could not serialize', () => {

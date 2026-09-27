@@ -7,6 +7,7 @@ export default defineConfig({
   entry: {
     'index': 'src/index.ts',
     'macro': 'src/macro.ts',
+    'runtime': 'src/runtime.ts',
     'compiler': 'src/compiler/index.ts',
     'unplugin': 'src/integrations/unplugin.ts',
     'vite': 'src/integrations/vite.ts',

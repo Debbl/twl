@@ -1,3 +1,3 @@
-import { cls } from 'some-other-library'
+import { cn } from 'some-other-library'
 
-export const result = cls`flex items-center`
+export const result = cn`flex items-center`

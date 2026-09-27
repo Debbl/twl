@@ -19,24 +19,23 @@ msgid ""
 msgstr "按你思考的方式给类名分组、给每组加注释，剩下的交给编译器折成一个字符串。"
 
 #: src/app/[locale]/(home)/page.tsx:48
-msgid "Nothing left at runtime"
-msgstr "运行时什么都不剩"
+msgid "Static templates compile away"
+msgstr "静态模板在编译期处理"
 
 #: src/app/[locale]/(home)/page.tsx:49
 msgid ""
-"A static template becomes a string literal. A static tw template has its "
+"A static template becomes a string literal. A static macro template has its "
 "tailwind-merge resolved at build time too."
-msgstr "静态模板会变成字符串字面量；静态的 tw 模板连 tailwind-merge 都在编译期算完。"
+msgstr "静态模板会变成字符串字面量；静态的 macro 模板连 tailwind-merge 都在编译期算完。"
 
 #: src/app/[locale]/(home)/page.tsx:52
-msgid "Works without the plugin"
-msgstr "没装插件也能跑"
+msgid "Compiler-only entry"
+msgstr "纯编译入口"
 
 #: src/app/[locale]/(home)/page.tsx:53
 msgid ""
-"The macro entry exports the real runtime, so tests and scripts keep "
-"working. Only the cost differs."
-msgstr "macro 入口导出的就是真实运行时，测试和脚本照常工作，差的只是开销。"
+"The macro entry contains declarations only. The compiler removes it and imports runtime helpers from twl/runtime."
+msgstr "macro 入口只有类型声明。编译器会移除该入口，并从 twl/runtime 导入运行时函数。"
 
 #: src/app/[locale]/(home)/page.tsx:56
 msgid "Every bundler"
@@ -53,9 +52,8 @@ msgstr ""
 #: src/app/[locale]/(home)/page.tsx:78
 #: src/app/[locale]/layout.tsx:20
 msgid ""
-"Write long Tailwind class names across several lines, with comments, and "
-"pay nothing for it at runtime."
-msgstr "把长长的 Tailwind 类名分行写、加注释，运行时一分钱不花。"
+"The cn API with macro compilation for commented Tailwind classes and conflict merging."
+msgstr "在 cn API 基础上增加 macro 编译，支持 Tailwind 类名注释和冲突合并。"
 
 #: src/app/[locale]/(home)/page.tsx:91
 msgid "Get started"

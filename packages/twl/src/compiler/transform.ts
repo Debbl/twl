@@ -7,22 +7,24 @@ import {
   resolveMacroBindings,
 } from './bindings'
 import { compileTemplate } from './emit'
-import { isProvablyString } from './expressions'
 import { lineAt, walk } from './walk'
 import type { StaticImport } from './bindings'
 import type { Node, TransformOptions, TransformResult } from './types'
 
 const DEFAULT_FROM = ['twl/macro']
-const EXPORT_NAMES = ['cls', 'tw'] as const
-const RUNTIME_MODULE = 'twl'
+const EXPORT_NAMES = ['cn', 'clsx', 'twMerge'] as const
+const RUNTIME_MODULE = 'twl/runtime'
 
 /**
  * Local names the injected runtime helpers are bound to. Deliberately not
  * spellable by hand, so injecting them can never shadow or collide with the
  * module's own names - including its own `clsx` import, if it has one.
  */
-const CLSX_LOCAL = '__twl_clsx'
-const TW_MERGE_LOCAL = '__twl_twMerge'
+const RUNTIME_LOCALS = {
+  cn: '__twl_cn',
+  clsx: '__twl_clsx',
+  twMerge: '__twl_twMerge',
+} as const
 
 const LANGS = {
   js: 'js',
@@ -63,7 +65,7 @@ function fail(code: string, filename: string, offset: number, message: string) {
 }
 
 /**
- * Rewrites every `cls` and `tw` tagged template to the class string it would
+ * Rewrites every imported macro template to the class string it would
  * have produced at runtime, and drops the macro import.
  *
  * Returns `null` when the file has nothing to compile, so callers can hand
@@ -100,7 +102,7 @@ export function transform(
       code,
       filename,
       namespace.start,
-      `\`import * as ${namespace.name} from '${namespace.request}'\` cannot be compiled. Import \`cls\` or \`tw\` by name instead.`,
+      `\`import * as ${namespace.name} from '${namespace.request}'\` cannot be compiled. Import \`cn\`, \`clsx\`, or \`twMerge\` by name instead.`,
     )
   }
 
@@ -108,10 +110,9 @@ export function transform(
 
   const source = new MagicString(code)
   const templates: Array<{ start: number; end: number; code: string }> = []
-  let usesClsx = false
-  let usesTwMerge = false
+  const runtimeHelpers = new Set<keyof typeof RUNTIME_LOCALS>()
+  const runtimeReferences = new Set<string>()
   let shadow: { name: string; start: number } | undefined
-  let misuse: { name: string; start: number } | undefined
 
   walk(parsed.program, (node, parent) => {
     // A local binding of the same name would make some references in this file
@@ -135,19 +136,27 @@ export function transform(
       const cooked = quasis.map(
         (element) => (element.value as { cooked: string | null }).cooked,
       )
-      // `cooked` is null only for an escape the runtime could not read either.
-      if (cooked.includes(null)) return
+      if (cooked.includes(null)) {
+        throw fail(
+          code,
+          filename,
+          node.start as number,
+          'invalid escape in macro template.',
+        )
+      }
 
       const compiled = compileTemplate({
         cooked: cooked as string[],
-        expressions: expressions.map((expression) => ({
-          text: code.slice(
+        expressions: expressions.map((expression) => {
+          const text = code.slice(
             expression.start as number,
             expression.end as number,
-          ),
-          isString: isProvablyString(expression),
-        })),
-        clsxLocal: CLSX_LOCAL,
+          )
+          return {
+            text: expression.type === 'SequenceExpression' ? `(${text})` : text,
+          }
+        }),
+        runtimeLocal: RUNTIME_LOCALS[macro],
       })
 
       if (compiled.dropped.length > 0) {
@@ -160,20 +169,11 @@ export function transform(
         )
       }
 
-      usesClsx ||= compiled.usesClsx
-
       let replacement = compiled.code
-
-      if (macro === 'tw') {
-        if (compiled.constant === undefined) {
-          // Nothing to merge until the interpolations have values.
-          usesTwMerge = true
-          replacement = `${TW_MERGE_LOCAL}(${replacement})`
-        } else {
-          // `tw` is wired to one fixed `twMerge`, with no configuration a user
-          // could change, so merging now is the same as merging at runtime.
-          replacement = JSON.stringify(twMerge(compiled.constant))
-        }
+      if (compiled.constant === undefined) {
+        runtimeHelpers.add(macro)
+      } else if (macro !== 'clsx') {
+        replacement = JSON.stringify(twMerge(compiled.constant))
       }
 
       templates.push({
@@ -184,17 +184,16 @@ export function transform(
       return
     }
 
-    // Everything else that names the macro: the import is about to be removed,
-    // so a surviving reference would become a ReferenceError at runtime.
+    // Keep imports used by ordinary calls or other runtime references.
     if (
       node.type === 'Identifier' &&
       locals.has(node.name as string) &&
-      !isNonReferencePosition(parent, node) &&
+      (!isNonReferencePosition(parent, node) ||
+        (parent?.type === 'ExportSpecifier' && parent.local === node)) &&
       parent?.type !== 'TaggedTemplateExpression' &&
-      parent?.type !== 'ImportSpecifier' &&
-      misuse === undefined
+      parent?.type !== 'ImportSpecifier'
     ) {
-      misuse = { name: node.name as string, start: node.start as number }
+      runtimeReferences.add(node.name as string)
     }
   })
 
@@ -207,22 +206,20 @@ export function transform(
     )
   }
 
-  if (misuse !== undefined) {
-    throw fail(
-      code,
-      filename,
-      misuse.start,
-      `\`${misuse.name}\` can only be used as a template tag, as in \`${misuse.name}\`…\`\`.`,
-    )
-  }
-
-  if (templates.length === 0) return null
-
   for (const template of templates) {
     source.overwrite(template.start, template.end, template.code)
   }
 
   for (const declaration of imports) {
+    for (const binding of declaration.macros) {
+      if (runtimeReferences.has(binding.local)) {
+        declaration.kept.push(
+          binding.imported === binding.local
+            ? binding.imported
+            : `${binding.imported} as ${binding.local}`,
+        )
+      }
+    }
     if (declaration.kept.length === 0) {
       const end =
         code[declaration.end] === '\n' ? declaration.end + 1 : declaration.end
@@ -234,14 +231,13 @@ export function transform(
     source.overwrite(
       declaration.start,
       declaration.end,
-      `import { ${declaration.kept.join(', ')} } from ${declaration.request}`,
+      `import { ${declaration.kept.join(', ')} } from '${RUNTIME_MODULE}'`,
     )
   }
 
-  const helpers = [
-    ...(usesClsx ? [`clsx as ${CLSX_LOCAL}`] : []),
-    ...(usesTwMerge ? [`twMerge as ${TW_MERGE_LOCAL}`] : []),
-  ]
+  const helpers = [...runtimeHelpers].map(
+    (name) => `${name} as ${RUNTIME_LOCALS[name]}`,
+  )
 
   if (helpers.length > 0) {
     const statement = `import { ${helpers.join(', ')} } from '${RUNTIME_MODULE}';`

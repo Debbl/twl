@@ -1,7 +1,7 @@
 # twl
 
-Write long Tailwind class names across several lines, with comments, and pay
-nothing for it at runtime. See [packages/twl](packages/twl) for the docs.
+The `cn` API with macro compilation for `cn`, `clsx`, and `twMerge`.
+See [packages/twl](packages/twl) for the docs.
 
 ## Layout
 

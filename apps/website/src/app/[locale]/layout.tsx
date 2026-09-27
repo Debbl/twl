@@ -1,7 +1,7 @@
 import { t } from 'best-i18n/macro'
 import { setRequestLocale } from 'best-i18n/next/server'
 import { LocaleProvider } from 'best-i18n/react'
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 import { Provider } from '~/components/provider'
 import { LOCALES, i18nConfig } from '~/lib/i18n'
 import type { Metadata } from 'next'
@@ -17,7 +17,7 @@ export async function generateMetadata({
 
   return {
     title: 'twl',
-    description: t`Write long Tailwind class names across several lines, with comments, and pay nothing for it at runtime.`,
+    description: t`The cn API with macro compilation for commented Tailwind classes and conflict merging.`,
   }
 }
 
@@ -44,7 +44,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body
-        className={cls`
+        className={cn`
           // surface
           min-h-dvh bg-white text-neutral-900
           dark:bg-neutral-950 dark:text-neutral-100

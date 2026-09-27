@@ -1,18 +1,18 @@
 import { expect, it } from 'vitest'
-import { tw } from '../src'
+import { cn } from '../src'
 
 it('basic', () => {
-  const result = tw`text-sm`
+  const result = cn`text-sm`
   expect(result).toMatchInlineSnapshot(`"text-sm"`)
 })
 
 it('basic with expressions', () => {
-  const result = tw`text-sm ${'font-bold'}   ${'bg-sky-500'}`
+  const result = cn`text-sm ${'font-bold'}   ${'bg-sky-500'}`
   expect(result).toMatchInlineSnapshot(`"text-sm font-bold bg-sky-500"`)
 })
 
 it('multiple lines', () => {
-  const result = tw`
+  const result = cn`
     text-sm  bg-sky-500
     font-bold
     text-lg
@@ -21,7 +21,7 @@ it('multiple lines', () => {
 })
 
 it('multiple lines with expressions', () => {
-  const result = tw`
+  const result = cn`
     text-sm              bg-sky-400
     font-bold ${'font-bold'}   ${'bg-sky-500'}
   `
@@ -29,7 +29,7 @@ it('multiple lines with expressions', () => {
 })
 
 it('multiple lines with comments', () => {
-  const result = tw`
+  const result = cn`
     // hello
     text-sm  bg-sky-500
     font-bold
@@ -40,7 +40,7 @@ it('multiple lines with comments', () => {
 })
 
 it('keeps arbitrary values that contain //', () => {
-  const result = tw`
+  const result = cn`
     // background
     bg-[url(https://a.com/x.png)]
     underline

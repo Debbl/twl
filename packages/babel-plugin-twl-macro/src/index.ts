@@ -1,1 +1,1 @@
-export { cls } from './macro'
+export { cn, clsx, twMerge } from './macro'

@@ -1,18 +1,18 @@
 import { expect, it } from 'vitest'
-import { cls } from '../src'
+import { cn } from '../src'
 
 it('basic', () => {
-  const result = cls`text-sm`
+  const result = cn`text-sm`
   expect(result).toMatchInlineSnapshot(`"text-sm"`)
 })
 
 it('basic with expressions', () => {
-  const result = cls`text-sm ${'font-bold'}   ${'bg-sky-500'}`
+  const result = cn`text-sm ${'font-bold'}   ${'bg-sky-500'}`
   expect(result).toMatchInlineSnapshot(`"text-sm font-bold bg-sky-500"`)
 })
 
 it('multiple lines', () => {
-  const result = cls`
+  const result = cn`
     text-sm              bg-sky-500
     font-bold
   `
@@ -20,17 +20,15 @@ it('multiple lines', () => {
 })
 
 it('multiple lines with expressions', () => {
-  const result = cls`
+  const result = cn`
     text-sm              bg-sky-500
     font-bold ${'font-bold'}   ${'bg-sky-500'}
   `
-  expect(result).toMatchInlineSnapshot(
-    `"text-sm bg-sky-500 font-bold font-bold bg-sky-500"`,
-  )
+  expect(result).toMatchInlineSnapshot(`"text-sm font-bold bg-sky-500"`)
 })
 
 it('multiple lines with comments', () => {
-  const result = cls`
+  const result = cn`
     // hello
     text-sm              bg-sky-500
     // world
@@ -40,12 +38,12 @@ it('multiple lines with comments', () => {
 })
 
 it('adds spaces around adjacent expressions', () => {
-  const result = cls`flex${'items-center'}justify-center`
+  const result = cn`flex${'items-center'}justify-center`
   expect(result).toMatchInlineSnapshot(`"flex items-center justify-center"`)
 })
 
 it('keeps arbitrary values that contain //', () => {
-  const result = cls`
+  const result = cn`
     // background
     bg-[url(https://a.com/x.png)]
     ${"content-['//']"}

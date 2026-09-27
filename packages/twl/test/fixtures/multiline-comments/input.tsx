@@ -1,6 +1,6 @@
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
-export const result = cls`
+export const result = cn`
   // layout
   relative flex w-full flex-col
   rounded-lg border

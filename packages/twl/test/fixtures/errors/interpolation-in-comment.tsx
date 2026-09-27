@@ -1,8 +1,8 @@
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
 const className = 'flex'
 
-export const result = cls`
+export const result = cn`
   items-center // note ${className}
   justify-center
 `

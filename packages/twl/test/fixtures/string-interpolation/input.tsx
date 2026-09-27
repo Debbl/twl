@@ -1,10 +1,10 @@
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
 const active = true
 const size = 'lg'
 
 // Every interpolation here is provably a string, so none of them needs `clsx`.
-export const result = cls`
+export const result = cn`
   // base
   inline-flex items-center
   ${active ? 'ring-2' : ''}

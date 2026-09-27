@@ -1,8 +1,8 @@
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 import { bestI18nUrl, repoUrl } from '~/lib/shared'
 import type { ReactNode } from 'react'
 
-const className = cls`
+const className = cn`
   underline underline-offset-4
   hover:text-neutral-900 dark:hover:text-neutral-100
 `

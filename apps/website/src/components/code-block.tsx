@@ -1,7 +1,7 @@
 'use client'
 
 import { ScrollArea } from '@base-ui/react/scroll-area'
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
 /**
  * A code sample that scrolls sideways rather than wrapping.
@@ -23,14 +23,14 @@ export function CodeBlock({
 }) {
   return (
     <div
-      className={cls`
+      className={cn`
         // card
         flex min-w-0 flex-col overflow-hidden rounded-lg border
         border-neutral-200 dark:border-neutral-800
       `}
     >
       <div
-        className={cls`
+        className={cn`
           // label strip
           border-b px-4 py-2 text-xs font-medium
           border-neutral-200 bg-neutral-50 text-neutral-500
@@ -44,10 +44,10 @@ export function CodeBlock({
           the two are the same height, and the code is top-aligned in both.
           `min-h-0` lets that pane shrink instead of forcing the card open. */}
       <ScrollArea.Root
-        className={cls`min-h-0 min-w-0 flex-1 bg-(--syntax-background)`}
+        className={cn`min-h-0 min-w-0 flex-1 bg-(--syntax-background)`}
       >
         <ScrollArea.Viewport
-          className={cls`
+          className={cn`
             max-w-full overscroll-x-contain
             focus-visible:outline-2 focus-visible:-outline-offset-2
             focus-visible:outline-blue-500
@@ -56,7 +56,7 @@ export function CodeBlock({
           <ScrollArea.Content>
             {/* `w-max` lets the longest line set the width, which is what
                 gives the viewport something to scroll. */}
-            <pre className={cls`w-max min-w-full p-4 text-[12px]/relaxed`}>
+            <pre className={cn`w-max min-w-full p-4 text-[12px]/relaxed`}>
               <code className='language-tsx'>{children}</code>
             </pre>
           </ScrollArea.Content>
@@ -64,7 +64,7 @@ export function CodeBlock({
 
         <ScrollArea.Scrollbar
           orientation='horizontal'
-          className={cls`
+          className={cn`
             // overlay: no layout space, visible only when it is useful
             m-1 flex h-1.5 touch-none select-none
             rounded-full opacity-0 transition-opacity delay-200
@@ -73,7 +73,7 @@ export function CodeBlock({
           `}
         >
           <ScrollArea.Thumb
-            className={cls`
+            className={cn`
               rounded-full bg-neutral-400/60
               dark:bg-neutral-500/60
             `}

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 import { Button } from './button'
 
 export function App() {
@@ -7,7 +7,7 @@ export function App() {
 
   return (
     <main
-      className={cls`
+      className={cn`
         // layout
         flex min-h-dvh flex-col items-center justify-center gap-6
         // surface
@@ -15,7 +15,7 @@ export function App() {
         dark:bg-neutral-950 dark:text-neutral-50
       `}
     >
-      <h1 className={cls`text-2xl font-semibold tracking-tight`}>twl · vite</h1>
+      <h1 className={cn`text-2xl font-semibold tracking-tight`}>twl · vite</h1>
 
       <Button
         variant={count % 2 === 0 ? 'primary' : 'ghost'}
@@ -25,7 +25,7 @@ export function App() {
       </Button>
 
       <p
-        className={cls`
+        className={cn`
           // Every class name on this page was folded at build time.
           max-w-prose text-center text-sm text-neutral-500
         `}

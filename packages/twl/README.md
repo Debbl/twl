@@ -1,41 +1,6 @@
 # twl
 
-Write long Tailwind class names across several lines, with comments, and pay
-nothing for it at runtime.
-
-```tsx
-import { cls } from 'twl/macro'
-
-const button = (
-  <button
-    className={cls`
-      // layout
-      inline-flex shrink-0 items-center justify-center gap-2
-      whitespace-nowrap rounded-md
-      // interaction
-      cursor-pointer transition-[color,box-shadow] outline-none
-      disabled:pointer-events-none disabled:opacity-50
-      ${variant}
-    `}
-  />
-)
-```
-
-With a bundler plugin configured, that compiles to the string you would have
-written by hand:
-
-```tsx
-const button = (
-  <button
-    className={`inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-md cursor-pointer transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:opacity-50 ${__twl_clsx(variant)}`}
-  />
-)
-```
-
-Without one it still works - the runtime does the same folding on every render,
-which for a template this size costs about 1.2 µs a call and ships the
-newlines and comments to the browser. The plugin is what makes the way you want
-to write class names free.
+The `cn` API with macro compilation. No extra function names to learn.
 
 ## Install
 
@@ -43,29 +8,69 @@ to write class names free.
 pnpm add twl
 ```
 
-## Runtime
+## Runtime API
+
+`twl` exposes the `cn` API. Its `cn`, `clsx`, and `twMerge` functions also
+support commented templates. `ClassValue` and `ClassNameValue` are available as types.
 
 ```ts
-import { cls, cn, tw } from 'twl'
+import { cn, clsx, twMerge } from 'twl'
+import type { ClassValue } from 'twl'
 
-cls`flex  items-center` // 'flex items-center'
-tw`p-2 p-4` // 'p-4', conflicts merged
-cn('p-2', isActive && 'bg-blue-600') // clsx + tailwind-merge
+cn('p-2', { 'p-4': true }) // 'p-4'
+clsx('p-2', { 'p-4': true }) // 'p-2 p-4'
+twMerge('p-2', ['p-4']) // 'p-4'
 ```
 
-`cls` folds whitespace and strips `//` line comments. A `//` only starts a
-comment at a token boundary, so `bg-[url(https://a.com/x.png)]` and
-`content-['//']` are left alone. Interpolations go through `clsx`, so objects,
-arrays and nullish values behave as you would expect.
+## Compiled runtime
 
-`tw` is `cls` plus `tailwind-merge`.
+`twl/runtime` directly re-exports `cn`, `clsx`, and `twMerge` from `cn`, without
+template handling. The compiler emits imports from this entry.
+
+```ts
+import { cn as __twl_cn } from 'twl/runtime'
+
+const className = __twl_cn('flex items-center', variant)
+```
+
+## Macro API
+
+Import the same names from `twl/macro` to enable commented templates and
+build-time compilation. Ordinary function calls keep their original behavior.
+
+```ts
+import { cn, clsx, twMerge } from 'twl/macro'
+
+cn`
+  // spacing
+  p-2 p-4
+` // 'p-4'
+clsx`p-2 p-4` // 'p-2 p-4'
+twMerge`p-2 p-4` // 'p-4'
+
+cn`flex ${['p-2', { 'p-4': true }]}` // 'flex p-4'
+twMerge`p-2 ${['p-4', false]}` // 'p-4'
+cn('p-2', { 'p-4': true }) // ordinary calls still work
+```
+
+All three template tags collapse whitespace and strip `//` line comments.
+Comments only start at token boundaries, so `bg-[url(https://a.com/x.png)]`
+and `content-['//']` are preserved.
+
+| Macro     | Interpolations                                        | Tailwind conflicts |
+| --------- | ----------------------------------------------------- | ------------------ |
+| `cn`      | `ClassValue`, including objects and arrays            | Merged             |
+| `clsx`    | `ClassValue`, including objects and arrays            | Preserved          |
+| `twMerge` | `ClassNameValue`, including strings and nested arrays | Merged             |
+
+The macro entry contains only type declarations for `cn`, `clsx`, and
+`twMerge`. Compiled code imports `twl/runtime`, which directly re-exports `cn`, `clsx`,
+and `twMerge` from `cn`. The `twl` entry provides template support.
+The macro entry requires the compiler plugin. To run without compilation,
+import from `twl` instead.
+There are no `cls`, `tw`, or standalone `macro` function exports.
 
 ## Compiler
-
-Import from `twl/macro` instead of `twl`, then configure the plugin for your
-bundler. Every `cls` and `tw` template compiles to a literal; a `tw` template
-with no interpolation has its merge done at build time too, so nothing of
-tailwind-merge is left to run.
 
 ```ts
 // vite.config.ts
@@ -74,14 +79,16 @@ import twl from 'twl/vite'
 export default { plugins: [twl()] }
 ```
 
+Static templates compile to string literals: `cn` and `twMerge` also resolve
+conflicts at build time. Dynamic templates become direct calls to the matching `cn`, `clsx`, or
+`twMerge` function, with normalized static strings and original expressions
+as separate arguments. No template literal is emitted.
+Ordinary function calls are redirected to `twl/runtime`, which re-exports the original functions from `cn`.
+
 Also available: `twl/rollup`, `twl/rolldown`, `twl/webpack`, `twl/rspack`,
-`twl/esbuild`, `twl/farm`, and `twl/unplugin` for the raw factory.
+`twl/esbuild`, `twl/farm`, and `twl/unplugin`.
 
 ### Next.js
-
-Turbopack has no plugin API and only accepts webpack-shaped loaders, so it gets
-its own integration. `withTwl()` registers the same loader on Turbopack and
-webpack alike.
 
 ```ts
 // next.config.ts
@@ -90,34 +97,23 @@ import { withTwl } from 'twl/next'
 export default withTwl()({ reactCompiler: true })
 ```
 
+`withTwl()` registers the loader on both Turbopack and webpack.
+
 ### Options
 
-| Option    | Default             |                                                                                                                                         |
-| --------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `from`    | `['twl/macro']`     | Module specifiers whose `cls` and `tw` compile away. Add `'twl'` to compile the runtime entry too, at the price of the guarantee below. |
-| `include` | `/\.[cm]?[jt]sx?$/` | Files to compile. Not read by `twl/next`, which matches by its own rule.                                                                |
-| `exclude` | `/node_modules/`    | Dependencies ship compiled code already.                                                                                                |
+| Option    | Default             | Purpose                                                                       |
+| --------- | ------------------- | ----------------------------------------------------------------------------- |
+| `from`    | `['twl/macro']`     | Module specifiers exposing the macro API, including custom re-export modules. |
+| `include` | `/\.[cm]?[jt]sx?$/` | Files to compile. Next.js uses its own loader rule.                           |
+| `exclude` | `/node_modules/`    | Skip dependencies.                                                            |
 
-Importing from `twl/macro` is a promise that the template will be compiled, so
-the compiler is strict about it: a reference that is not a template tag, a
-local binding that shadows the import, or a namespace import is a build error
-rather than something that quietly reaches the runtime.
+The compiler rejects namespace imports, local bindings that shadow macro
+imports, and interpolations inside comments. Diagnostics include file and line.
 
-## What it does not do
+## Limitations
 
-An interpolation is not re-normalized once it has a value, so one that
-evaluates to nothing leaves behind the space that separated it. The class list
-is the same, which is all the DOM and Tailwind read, but the string differs:
-
-```ts
-cls`flex ${maybeEmpty} p-2` // runtime:  'flex p-2'
-// compiled: `flex ${__twl_clsx(maybeEmpty)} p-2`  ->  'flex  p-2'
-```
-
-`prettier-plugin-tailwindcss` sorts class names inside any template literal in
-a `className`, which flattens these templates and scatters their comments. The
-two are not currently compatible; `// prettier-ignore` on the attribute is the
-escape hatch.
+`prettier-plugin-tailwindcss` can reorder comments inside class templates.
+Use `// prettier-ignore` on the attribute when needed.
 
 ## Credits
 

@@ -1,5 +1,7 @@
-import { cls, tw } from 'twl/macro'
+import { cn, cn as merge, type cn as CnTag } from 'twl/macro'
 
-// Both macros come from the same import, which leaves nothing to keep.
-export const result = cls`flex  items-center`
-export const merged = tw`p-2  p-4`
+// Keep ordinary cn exports while removing the compiled macro import.
+export const result = cn`flex  items-center`
+export const merged = merge('p-2', 'p-4')
+
+export type Value = typeof CnTag

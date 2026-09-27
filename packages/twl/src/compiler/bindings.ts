@@ -1,7 +1,7 @@
 import type { Node } from './types'
 
 /** The macro exports this compiler knows how to fold away. */
-export type MacroName = 'cls' | 'tw'
+export type MacroName = 'cn' | 'clsx' | 'twMerge'
 
 export interface MacroBindings {
   /** Local name to the macro it is bound to, aliases included. */
@@ -15,8 +15,9 @@ export interface MacroBindings {
 export interface MacroImport {
   start: number
   end: number
-  /** Local names imported from the macro module that are not the macro. */
+  /** Import specifiers that must survive compilation, including aliases and types. */
   kept: string[]
+  macros: Array<{ local: string; imported: MacroName }>
   /** Source text of the module specifier, quotes included. */
   request: string
 }
@@ -37,8 +38,8 @@ export interface StaticImport {
 /**
  * Resolves which local identifiers really refer to the macro export.
  *
- * Matching on the name alone would both miss `import { cls as c }` and rewrite
- * an unrelated `cls` from another library, so the import binding is what
+ * Matching on the name alone would both miss `import { cn as c }` and rewrite
+ * an unrelated `cn` from another library, so the import binding is what
  * counts.
  */
 export function resolveMacroBindings(options: {
@@ -56,6 +57,7 @@ export function resolveMacroBindings(options: {
     if (!from.includes(declaration.moduleRequest.value)) continue
 
     const kept: string[] = []
+    const macros: MacroImport['macros'] = []
     let hasMacro = false
 
     for (const entry of declaration.entries) {
@@ -76,11 +78,21 @@ export function resolveMacroBindings(options: {
         exportNames.includes(imported)
       ) {
         locals.set(entry.localName.value, imported)
+        macros.push({ local: entry.localName.value, imported })
         hasMacro = true
         continue
       }
 
-      kept.push(entry.localName.value)
+      const importedName =
+        entry.importName.kind === 'Default'
+          ? 'default'
+          : (entry.importName.name ?? entry.localName.value)
+      const localName = entry.localName.value
+      const specifier =
+        importedName === localName
+          ? importedName
+          : `${importedName} as ${localName}`
+      kept.push(`${entry.isType ? 'type ' : ''}${specifier}`)
     }
 
     if (hasMacro) {
@@ -88,6 +100,7 @@ export function resolveMacroBindings(options: {
         start: declaration.start,
         end: declaration.end,
         kept,
+        macros,
         request: code.slice(
           declaration.moduleRequest.start,
           declaration.moduleRequest.end,
@@ -101,7 +114,7 @@ export function resolveMacroBindings(options: {
 
 /**
  * Positions where an identifier is a name rather than a value reference, so
- * `foo.cls` or `{ cls: 1 }` is not mistaken for macro usage.
+ * `foo.cn` or `{ cn: 1 }` is not mistaken for macro usage.
  */
 export function isNonReferencePosition(parent: Node | undefined, node: Node) {
   if (parent === undefined) return false

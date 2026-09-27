@@ -1,41 +1,9 @@
 ---
 title: 介绍
-description: 把长长的 Tailwind 类名分行写、加注释，运行时一分钱不花。
+description: 在 cn、clsx、twMerge 的基础上增加 macro 编译。
 ---
 
-长长的 `className` 挤在一行里既难读、在 diff 里也难 review。`twl` 让你把它拆开：
-
-```tsx
-import { cls } from 'twl/macro'
-
-;<button
-  className={cls`
-    // 布局
-    inline-flex shrink-0 items-center justify-center gap-2
-    whitespace-nowrap rounded-md
-    // 交互
-    cursor-pointer transition-[color,box-shadow] outline-none
-    disabled:pointer-events-none disabled:opacity-50
-    ${variant}
-  `}
-/>
-```
-
-空白会被折叠、`//` 注释会被剥掉，元素最终拿到的就是你手写单行时会写出的那个字符串。
-
-## 代价，以及编译器为什么存在
-
-放在运行时做，这份折叠并不免费——而且你越用力用这个特性，它越贵：
-
-| 模板                                | 运行时      | 编译后   |
-| ----------------------------------- | ----------- | -------- |
-| 6 个类名、单行                      | 210 ns      | 3.7 ns   |
-| 多行 + 1 条注释                     | 322 ns      | 3.7 ns   |
-| 真实按钮：18 行、6 条注释、3 处插值 | **1203 ns** | **4 ns** |
-
-而且换行和注释文本会**原样打进浏览器**——压缩器不知道 `cls` 是什么意思，折不掉。
-
-所以编译器的作用不是提供特性，而是**让这个特性免费**：配好打包器插件之后，上面那个模板会编译成一个普通字面量，那个文件里不会剩下任何 `twl`。
+`twl` 提供支持注释模板的 `cn`、`clsx`、`twMerge` 实现，同时导出 `ClassValue`、`ClassNameValue` 参数类型。`twl/macro` 只声明这三个函数的类型，没有运行时导出，由编译器处理。
 
 ## 安装
 
@@ -46,15 +14,37 @@ pnpm add twl
 ## 运行时
 
 ```ts
-import { cls, cn, tw } from 'twl'
+import { cn, clsx, twMerge } from 'twl'
 
-cls`flex  items-center` // 'flex items-center'
-tw`p-2 p-4` // 'p-4'，冲突已合并
-cn('p-2', isActive && 'bg-blue-600') // clsx + tailwind-merge
+cn('p-2', { 'p-4': true }) // 'p-4'
+clsx('p-2', { 'p-4': true }) // 'p-2 p-4'
+twMerge('p-2', ['p-4']) // 'p-4'
 ```
 
-`cls` 折叠空白、剥掉 `//` 行注释。注释只在 token 边界才算起点，所以
-`bg-[url(https://a.com/x.png)]` 和 `content-['//']` 不会被误伤。插值会过一遍
-`clsx`，因此对象、数组和 nullish 值的行为符合预期。
+## Macro
 
-`tw` 就是 `cls` 再加上 `tailwind-merge`。
+```ts
+import { cn, clsx, twMerge } from 'twl/macro'
+
+const button = cn`
+  // 布局
+  inline-flex items-center gap-2
+  // 间距
+  p-2 p-4
+  ${variant}
+`
+
+clsx`p-2 p-4` // 'p-2 p-4'：只拼接，不合并冲突
+twMerge`p-2 ${['p-4']}` // 'p-4'
+cn('p-2', { 'p-4': true }) // 普通函数调用仍可使用
+```
+
+三个模板标签都支持折叠空白、移除 token 边界上的 `//` 注释，URL 和任意值中的
+`//` 会保留。`cn`、`clsx` 的插值支持对象、数组等 `ClassValue`；`twMerge`
+沿用 `ClassNameValue`，支持字符串、嵌套数组和原有的空值，不增加对象参数。
+
+配置打包器插件后，静态模板会变成字符串，`cn` 和 `twMerge` 的冲突合并也在编译期
+完成。动态模板只保留必要的运行时调用，普通函数调用仍在运行时执行。
+宏入口必须配置编译插件。无需编译时，从 `twl` 导入即可使用运行时模板。
+
+`twl/macro` 只有类型声明，编译产物从 `twl/runtime` 导入 cn 包的原生函数，`twl` 主入口提供模板支持。

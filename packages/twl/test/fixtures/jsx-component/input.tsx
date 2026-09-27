@@ -1,9 +1,9 @@
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
 export function Card({ className }: { className?: string }) {
   return (
     <div
-      className={cls`
+      className={cn`
         // surface
         relative flex flex-col
         rounded-lg border

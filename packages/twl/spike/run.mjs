@@ -18,7 +18,7 @@ import twl from '../dist/esbuild.mjs'
 const here = path.dirname(fileURLToPath(import.meta.url))
 const entry = path.join(here, 'fixture', 'src', 'main.ts')
 
-async function bundle(plugins) {
+async function bundle(plugins, runtimeReference = false) {
   const result = await build({
     entryPoints: [entry],
     bundle: true,
@@ -26,6 +26,11 @@ async function bundle(plugins) {
     format: 'esm',
     write: false,
     plugins,
+    logLevel: 'silent',
+    // The comparison explicitly uses the runtime entry, not a macro fallback.
+    alias: runtimeReference
+      ? { 'twl/macro': path.join(here, '../dist/index.mjs') }
+      : {},
   })
 
   const code = result.outputFiles[0].text
@@ -34,7 +39,14 @@ async function bundle(plugins) {
 }
 
 const compiled = await bundle([twl()])
-const runtime = await bundle([])
+const runtime = await bundle([], true)
+
+let requiresCompiler = false
+try {
+  await bundle([])
+} catch (error) {
+  requiresCompiler = String(error).includes('No matching export')
+}
 
 // Minification renames every function, so the probe has to be text the source
 // carries rather than an identifier: a `//` comment only survives in a bundle
@@ -43,11 +55,12 @@ const COMMENT = '// layout'
 const FOLDED = 'flex items-center justify-center'
 
 const checks = [
+  ['macro entry requires compilation', requiresCompiler],
   ['macro import is gone', !compiled.code.includes('twl/macro')],
   ['class names are folded', compiled.code.includes(FOLDED)],
   ['comments do not ship', !compiled.code.includes(COMMENT)],
   [
-    'static tw merge is resolved',
+    'static macro merge is resolved',
     compiled.code.includes('py-1 px-4 bg-red-600'),
   ],
   ['the runtime build really differs', runtime.code.includes(COMMENT)],

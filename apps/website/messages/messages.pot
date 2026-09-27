@@ -19,23 +19,22 @@ msgid ""
 msgstr ""
 
 #: src/app/[locale]/(home)/page.tsx:48
-msgid "Nothing left at runtime"
+msgid "Static templates compile away"
 msgstr ""
 
 #: src/app/[locale]/(home)/page.tsx:49
 msgid ""
-"A static template becomes a string literal. A static tw template has its "
+"A static template becomes a string literal. A static macro template has its "
 "tailwind-merge resolved at build time too."
 msgstr ""
 
 #: src/app/[locale]/(home)/page.tsx:52
-msgid "Works without the plugin"
+msgid "Compiler-only entry"
 msgstr ""
 
 #: src/app/[locale]/(home)/page.tsx:53
 msgid ""
-"The macro entry exports the real runtime, so tests and scripts keep "
-"working. Only the cost differs."
+"The macro entry contains declarations only. The compiler removes it and imports runtime helpers from twl/runtime."
 msgstr ""
 
 #: src/app/[locale]/(home)/page.tsx:56
@@ -51,8 +50,7 @@ msgstr ""
 #: src/app/[locale]/(home)/page.tsx:78
 #: src/app/[locale]/layout.tsx:20
 msgid ""
-"Write long Tailwind class names across several lines, with comments, and "
-"pay nothing for it at runtime."
+"The cn API with macro compilation for commented Tailwind classes and conflict merging."
 msgstr ""
 
 #: src/app/[locale]/(home)/page.tsx:91

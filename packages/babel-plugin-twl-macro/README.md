@@ -1,19 +1,20 @@
 # babel-plugin-twl-macro
 
-This package contains the compile-time implementation behind `twl/macro`.
+This package provides the legacy Babel macro adapter. New projects should use
+the compiler and bundler integrations in `twl`.
 
 Application code should usually import the macro from `twl/macro`:
 
 ```ts
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 
-const className = cls`
+const className = cn`
   flex
   items-center
 `
 ```
 
-Static templates compile to string literals. Templates with expressions compile
-to normal template literals while keeping the expressions in place.
+Static templates compile to merged string literals. Templates with expressions
+become direct calls to the matching runtime function with separate arguments.
 
-If you need the macro package directly, use `babel-plugin-twl-macro/macro`.
+If you need the macro package directly, use `babel-plugin-twl-macro/cn`.

@@ -13,19 +13,9 @@ function placeholder(index: number) {
 
 const PLACEHOLDER_PATTERN = new RegExp(`${MARK}(\\d+)${MARK}`, 'g')
 
-/** Escapes text so it reads back identically inside a template literal. */
-function escapeTemplateText(text: string) {
-  return text
-    .replace(/\\/g, '\\\\')
-    .replace(/`/g, '\\`')
-    .replace(/\$\{/g, '\\${')
-}
-
 export interface Interpolation {
   /** Source text of the expression, kept verbatim. */
   text: string
-  /** Whether it can be interpolated as is, rather than through `clsx`. */
-  isString: boolean
 }
 
 export interface CompiledTemplate {
@@ -38,8 +28,6 @@ export interface CompiledTemplate {
   constant?: string
   /** Indices of interpolations that normalization dropped. */
   dropped: number[]
-  /** Whether the output calls `clsx`, so the caller can import it. */
-  usesClsx: boolean
 }
 
 /**
@@ -52,10 +40,10 @@ export interface CompiledTemplate {
 export function compileTemplate(options: {
   cooked: string[]
   expressions: Interpolation[]
-  /** Local name `clsx` is available under, for the interpolations that need it. */
-  clsxLocal: string
+  /** Runtime function used for dynamic templates. */
+  runtimeLocal: string
 }): CompiledTemplate {
-  const { cooked, expressions, clsxLocal } = options
+  const { cooked, expressions, runtimeLocal } = options
 
   const parts: string[] = []
   for (const [index, text] of cooked.entries()) {
@@ -85,31 +73,18 @@ export function compileTemplate(options: {
       code: JSON.stringify(normalized),
       constant: normalized,
       dropped,
-      usesClsx: false,
     }
   }
 
   quasis.push(normalized.slice(cursor))
 
-  let code = '`'
-  let usesClsx = false
-
+  const args: string[] = []
   for (const [index, quasi] of quasis.entries()) {
-    code += escapeTemplateText(quasi)
-
+    const text = quasi.trim()
+    if (text) args.push(JSON.stringify(text))
     const expression = kept[index]
-    if (expression === undefined) continue
-
-    const { text, isString } = expressions[expression]!
-    if (isString) {
-      code += `\${${text}}`
-    } else {
-      // The runtime hands every interpolation to `clsx`, which turns an
-      // object into its truthy keys and a nullish value into nothing.
-      usesClsx = true
-      code += `\${${clsxLocal}(${text})}`
-    }
+    if (expression !== undefined) args.push(expressions[expression]!.text)
   }
 
-  return { code: `${code}\``, dropped, usesClsx }
+  return { code: `${runtimeLocal}(${args.join(', ')})`, dropped }
 }

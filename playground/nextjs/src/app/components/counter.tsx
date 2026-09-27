@@ -1,7 +1,7 @@
 'use client'
 import { PartyPopper } from 'lucide-react'
 import { useState } from 'react'
-import { cls } from 'twl/macro'
+import { cn } from 'twl/macro'
 import { Button } from '~/components/ui/button'
 
 export default function Counter() {
@@ -11,7 +11,7 @@ export default function Counter() {
   return (
     <Button type='button' variant='outline' onClick={() => setCount(count + 1)}>
       <span
-        className={cls`
+        className={cn`
           inline-flex
           items-center
           gap-2
