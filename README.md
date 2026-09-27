@@ -32,4 +32,5 @@ pnpm bench -- --write # record a new scripts/bench-baseline.json
 
 ## Credits
 
+- https://github.com/shadcn-ui/cn
 - https://github.com/yunsii/tagged-classnames-free

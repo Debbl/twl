@@ -117,4 +117,5 @@ Use `// prettier-ignore` on the attribute when needed.
 
 ## Credits
 
+- https://github.com/shadcn-ui/cn
 - https://github.com/yunsii/tagged-classnames-free
