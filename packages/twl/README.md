@@ -1,4 +1,9 @@
-# twl
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Debbl/twl/main/assets/logo/lockup.svg">
+    <img alt="twl" src="https://raw.githubusercontent.com/Debbl/twl/main/assets/logo/lockup-light.svg" height="72">
+  </picture>
+</h1>
 
 The `cn` API with macro compilation. No extra function names to learn.
 

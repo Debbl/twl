@@ -8,40 +8,41 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/app/[locale]/(home)/page.tsx:44
+#: src/app/[locale]/(home)/page.tsx:47
 msgid "Newlines and comments"
 msgstr "换行与注释"
 
-#: src/app/[locale]/(home)/page.tsx:45
+#: src/app/[locale]/(home)/page.tsx:48
 msgid ""
 "Group class names the way you think about them, annotate the groups, and "
 "let the compiler fold it all into one string."
 msgstr "按你思考的方式给类名分组、给每组加注释，剩下的交给编译器折成一个字符串。"
 
-#: src/app/[locale]/(home)/page.tsx:48
+#: src/app/[locale]/(home)/page.tsx:51
 msgid "Static templates compile away"
 msgstr "静态模板在编译期处理"
 
-#: src/app/[locale]/(home)/page.tsx:49
+#: src/app/[locale]/(home)/page.tsx:52
 msgid ""
 "A static template becomes a string literal. A static macro template has its "
 "tailwind-merge resolved at build time too."
 msgstr "静态模板会变成字符串字面量；静态的 macro 模板连 tailwind-merge 都在编译期算完。"
 
-#: src/app/[locale]/(home)/page.tsx:52
+#: src/app/[locale]/(home)/page.tsx:55
 msgid "Compiler-only entry"
 msgstr "纯编译入口"
 
-#: src/app/[locale]/(home)/page.tsx:53
+#: src/app/[locale]/(home)/page.tsx:56
 msgid ""
-"The macro entry contains declarations only. The compiler removes it and imports runtime helpers from twl/runtime."
+"The macro entry contains declarations only. The compiler removes it and "
+"imports runtime helpers from twl/runtime."
 msgstr "macro 入口只有类型声明。编译器会移除该入口，并从 twl/runtime 导入运行时函数。"
 
-#: src/app/[locale]/(home)/page.tsx:56
+#: src/app/[locale]/(home)/page.tsx:59
 msgid "Every bundler"
 msgstr "所有打包器"
 
-#: src/app/[locale]/(home)/page.tsx:57
+#: src/app/[locale]/(home)/page.tsx:60
 msgid ""
 "Vite, Rollup, Rolldown, webpack, Rspack, esbuild and Farm through unplugin "
 "— and Turbopack through its own loader."
@@ -49,13 +50,14 @@ msgstr ""
 "Vite、Rollup、Rolldown、webpack、Rspack、esbuild 和 Farm 走 unplugin，Turbopack "
 "走它自己的 loader。"
 
-#: src/app/[locale]/(home)/page.tsx:78
-#: src/app/[locale]/layout.tsx:20
+#: src/app/[locale]/(home)/page.tsx:81
+#: src/app/[locale]/layout.tsx:31
 msgid ""
-"The cn API with macro compilation for commented Tailwind classes and conflict merging."
+"The cn API with macro compilation for commented Tailwind classes and "
+"conflict merging."
 msgstr "在 cn API 基础上增加 macro 编译，支持 Tailwind 类名注释和冲突合并。"
 
-#: src/app/[locale]/(home)/page.tsx:91
+#: src/app/[locale]/(home)/page.tsx:93
 msgid "Get started"
 msgstr "开始使用"
 
@@ -75,3 +77,9 @@ msgid ""
 msgstr ""
 "这个页面由 <TwlRepo>twl</TwlRepo> 和 <BestI18nRepo>best-i18n</BestI18nRepo> "
 "构建。页面上的每个类名都在编译期折叠完成，上面每句文案也都为当前语言内联好了。"
+
+#: src/app/[locale]/layout.tsx:25
+msgid ""
+"twl: the cn API, compiled. A commented cn template and the plain string it "
+"compiles to."
+msgstr "twl：编译期的 cn API。一个带注释的 cn 模板，以及它编译成的纯字符串。"

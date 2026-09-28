@@ -1,4 +1,9 @@
-# twl
+<h1 align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/logo/lockup.svg">
+    <img alt="twl" src="assets/logo/lockup-light.svg" height="72">
+  </picture>
+</h1>
 
 The `cn` API with macro compilation for `cn`, `clsx`, and `twMerge`.
 See [packages/twl](packages/twl) for the docs.
@@ -11,6 +16,7 @@ packages/eslint-plugin-twl  class sorting and compiler checks for ESLint
 packages/oxlint-plugin-twl  the same rules for Oxlint
 packages/babel-*            the superseded Babel macro
 apps/website                docs, built with twl and best-i18n
+apps/promo                  the 15-second promo video, in Three.js
 playground/nextjs           Next.js + Turbopack, through twl/next
 playground/vite-react       Vite + React, through twl/vite
 ```

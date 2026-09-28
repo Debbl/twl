@@ -8,52 +8,54 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/app/[locale]/(home)/page.tsx:44
+#: src/app/[locale]/(home)/page.tsx:47
 msgid "Newlines and comments"
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:45
+#: src/app/[locale]/(home)/page.tsx:48
 msgid ""
 "Group class names the way you think about them, annotate the groups, and "
 "let the compiler fold it all into one string."
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:48
+#: src/app/[locale]/(home)/page.tsx:51
 msgid "Static templates compile away"
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:49
+#: src/app/[locale]/(home)/page.tsx:52
 msgid ""
 "A static template becomes a string literal. A static macro template has its "
 "tailwind-merge resolved at build time too."
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:52
+#: src/app/[locale]/(home)/page.tsx:55
 msgid "Compiler-only entry"
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:53
+#: src/app/[locale]/(home)/page.tsx:56
 msgid ""
-"The macro entry contains declarations only. The compiler removes it and imports runtime helpers from twl/runtime."
+"The macro entry contains declarations only. The compiler removes it and "
+"imports runtime helpers from twl/runtime."
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:56
+#: src/app/[locale]/(home)/page.tsx:59
 msgid "Every bundler"
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:57
+#: src/app/[locale]/(home)/page.tsx:60
 msgid ""
 "Vite, Rollup, Rolldown, webpack, Rspack, esbuild and Farm through unplugin "
 "— and Turbopack through its own loader."
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:78
-#: src/app/[locale]/layout.tsx:20
+#: src/app/[locale]/(home)/page.tsx:81
+#: src/app/[locale]/layout.tsx:31
 msgid ""
-"The cn API with macro compilation for commented Tailwind classes and conflict merging."
+"The cn API with macro compilation for commented Tailwind classes and "
+"conflict merging."
 msgstr ""
 
-#: src/app/[locale]/(home)/page.tsx:91
+#: src/app/[locale]/(home)/page.tsx:93
 msgid "Get started"
 msgstr ""
 
@@ -70,4 +72,10 @@ msgid ""
 "This page is built with <TwlRepo>twl</TwlRepo> and "
 "<BestI18nRepo>best-i18n</BestI18nRepo>. Every class name on it was folded "
 "at build time, and every string above was inlined for this locale."
+msgstr ""
+
+#: src/app/[locale]/layout.tsx:25
+msgid ""
+"twl: the cn API, compiled. A commented cn template and the plain string it "
+"compiles to."
 msgstr ""

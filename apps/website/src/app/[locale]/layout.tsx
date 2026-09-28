@@ -4,6 +4,7 @@ import { LocaleProvider } from 'best-i18n/react'
 import { cn } from 'twl/macro'
 import { Provider } from '~/components/provider'
 import { LOCALES, i18nConfig } from '~/lib/i18n'
+import { appName, siteUrl } from '~/lib/shared'
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
@@ -15,9 +16,21 @@ export async function generateMetadata({
   const { locale } = await params
   setRequestLocale(locale)
 
+  // Declared here rather than as app/opengraph-image.png: the file convention
+  // drops its .alt.txt in the static export, and a file would override this.
+  const image = {
+    url: '/og-image.png',
+    width: 1200,
+    height: 630,
+    alt: t`twl: the cn API, compiled. A commented cn template and the plain string it compiles to.`,
+  }
+
   return {
-    title: 'twl',
+    metadataBase: new URL(siteUrl),
+    title: appName,
     description: t`The cn API with macro compilation for commented Tailwind classes and conflict merging.`,
+    openGraph: { type: 'website', siteName: appName, images: [image] },
+    twitter: { card: 'summary_large_image', images: [image] },
   }
 }
 

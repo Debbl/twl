@@ -1,4 +1,6 @@
 export const appName = 'twl'
+// The deployed site, which social previews resolve their image URLs against.
+export const siteUrl = 'https://twl.aiwan.run'
 export const docsRoute = '/docs'
 
 export const gitConfig = {

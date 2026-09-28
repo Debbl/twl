@@ -1,0 +1,27 @@
+{
+  "name": "@apps/promo",
+  "private": true,
+  "description": "A 15-second motion graphics promo for twl, rendered with Three.js",
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm score && vite",
+    "score": "node scripts/score.ts",
+    "brand": "node scripts/brand.ts",
+    "stills": "node scripts/render.ts stills",
+    "sheet": "node scripts/render.ts sheet",
+    "render": "pnpm score && node scripts/render.ts video",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.scripts.json"
+  },
+  "dependencies": {
+    "playwright-core": "^1.63.0",
+    "three": "^0.186.1",
+    "ws": "^8.21.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "@types/three": "^0.186.0",
+    "@types/ws": "^8.18.1",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.1"
+  }
+}

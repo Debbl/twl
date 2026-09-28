@@ -1,7 +1,8 @@
 import { uiTranslations } from 'fumadocs-ui/i18n'
+import { Logo } from '~/components/logo'
 import { docsI18n } from './docs-i18n'
 import { localePath } from './i18n'
-import { appName, docsRoute, gitConfig } from './shared'
+import { docsRoute, gitConfig } from './shared'
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared'
 
 export const translations = docsI18n
@@ -37,7 +38,10 @@ export function baseOptions(locale: string): BaseLayoutProps {
   const labels = NAV_LABELS[locale] ?? NAV_LABELS.en!
 
   return {
-    nav: { title: appName, url: localePath('/', locale) },
+    nav: {
+      title: <Logo className='h-5 w-auto' />,
+      url: localePath('/', locale),
+    },
     links: [
       {
         text: labels.docs,
