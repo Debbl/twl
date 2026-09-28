@@ -11,8 +11,10 @@ means the newlines are collapsed and the comments are moved to the front, away
 from the classes they annotated. `tailwindPreserveWhitespace` keeps the shape of
 the lines but still reorders tokens across them.
 
-There is no setting that makes the two work together today. `// prettier-ignore`
-on the attribute is the escape hatch, or leave the plugin out.
+There is no setting that makes the two work together. Leave the plugin out and
+sort with [`twl/sort-classes`](/docs/lint/sort-classes) instead, which
+keeps every class inside its comment group, or use `// prettier-ignore` on the
+attribute.
 
 ## Invalid escapes
 

@@ -1,0 +1,29 @@
+---
+title: no-interpolation-in-comment
+description: Disallow interpolations inside `//` comments of twl templates.
+---
+
+Recommended: `error`.
+
+A `//` comment runs to the end of the line, across any interpolation on it. The
+compiler drops the interpolated value along with the comment, and refuses the
+file rather than lose it silently. This rule reports the same interpolation in
+the editor.
+
+## Invalid
+
+```ts
+cn`p-2 // highlighted ${active && 'ring-2'}`
+```
+
+## Valid
+
+```ts
+cn`
+  p-2 // highlighted
+  ${active && 'ring-2'}
+`
+```
+
+A comment only starts at a token boundary, so `bg-[url(https://a.com/x.png)]`
+and `content-['//']` are class names, not comments.

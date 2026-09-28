@@ -1,0 +1,8 @@
+[
+  {
+    "messageId": "namespace",
+    "message": "`import * as m from 'twl/macro'` cannot be compiled. Import `cn`, `clsx`, or `twMerge` by name instead.",
+    "line": 1,
+    "column": 8
+  }
+]

@@ -1,0 +1,14 @@
+[
+  {
+    "messageId": "commented",
+    "message": "This interpolation sits inside a `//` comment, so it would be dropped. Move it out of the comment.",
+    "line": 4,
+    "column": 16
+  },
+  {
+    "messageId": "commented",
+    "message": "This interpolation sits inside a `//` comment, so it would be dropped. Move it out of the comment.",
+    "line": 4,
+    "column": 21
+  }
+]

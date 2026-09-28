@@ -1,0 +1,27 @@
+---
+title: no-namespace-import
+description: Disallow namespace imports of the twl macro module.
+---
+
+Recommended: `error`.
+
+The compiler finds macros by their import name and cannot follow a namespace
+object, so it refuses a namespace import of the macro module.
+
+## Invalid
+
+```ts
+import * as twl from 'twl/macro'
+
+twl.cn`p-2`
+```
+
+## Valid
+
+```ts
+import { cn } from 'twl/macro'
+
+cn`p-2`
+```
+
+Modules listed in `settings.twl.from` are checked the same way.

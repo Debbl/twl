@@ -1,0 +1,71 @@
+---
+title: sort-classes
+description: 在每个注释组内，对 twl 模板里的 Tailwind 类名排序。
+---
+
+推荐级别：`warn`。可以用 `--fix` 自动修复。
+
+按 Tailwind 的顺序排序类名，顺序和 `prettier-plugin-tailwindcss` 的结果一致，但只在组内
+排序。`//` 注释、插值和空行都会结束一个组，类名不会被移过其中任何一个。
+
+```ts
+cn`
+  // layout
+  items-center flex
+  // spacing
+  p-4 m-2
+  ${active && 'ring-2'}
+  font-bold text-sm
+`
+```
+
+`--fix` 之后变成：
+
+```ts
+cn`
+  // layout
+  flex items-center
+  // spacing
+  m-2 p-4
+  ${active && 'ring-2'}
+  text-sm font-bold
+`
+```
+
+只有类名互换位置，空白都留在原处，所以写成多行的组会保留原来的换行和缩进。
+
+Tailwind 不认识的类排在最前面，保持原来的相对顺序。
+
+## 准备
+
+规则需要配置 `settings.twl.stylesheet`（Tailwind CSS v4 的入口文件），并安装
+`@tailwindcss/node`：
+
+```sh
+pnpm add -D @tailwindcss/node
+```
+
+没有配置 `stylesheet` 时，规则只提示一次并跳过排序。
+
+## 选项
+
+| 选项                 | 默认值  | 作用                       |
+| -------------------- | ------- | -------------------------- |
+| `preserveDuplicates` | `false` | 保留组内重复出现的已知类。 |
+
+在 `eslint.config.js` 和 Oxlint 配置里，规则项的写法相同：
+
+```js
+rules: {
+  'twl/sort-classes': ['warn', { preserveDuplicates: true }],
+}
+```
+
+## 注意事项
+
+- design system 在 worker 线程里按样式表各加载一次，入口文件变化时重新加载。修改它
+  import 的其他文件后，需要重启 ESLint 或 Oxlint 的语言服务。
+- 含反斜杠转义的模板不做处理。
+- `${}` 里的表达式不会被排序。
+- 这些模板不要再交给 `prettier-plugin-tailwindcss` 处理，否则两边会互相覆盖。参见
+  [限制](/zh/docs/limitations)。

@@ -48,3 +48,8 @@ cn('p-2', { 'p-4': true }) // 普通函数调用仍可使用
 宏入口必须配置编译插件。无需编译时，从 `twl` 导入即可使用运行时模板。
 
 `twl/macro` 只有类型声明，编译产物从 `twl/runtime` 导入 cn 包的原生函数，`twl` 主入口提供模板支持。
+
+## Lint
+
+[`eslint-plugin-twl` 和 `oxlint-plugin-twl`](/zh/docs/lint) 会在每个注释组内排序类名，
+并把编译器会拒绝的模板直接在编辑器里报出来。

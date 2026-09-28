@@ -1,0 +1,41 @@
+---
+title: no-shadowed-macro
+description: Disallow local bindings that shadow an imported twl macro.
+---
+
+Recommended: `error`.
+
+A local binding named like an imported macro makes some references in the file
+mean something else. Rather than guess which, the compiler refuses the whole
+file. This rule reports each such binding, aliases included.
+
+## Invalid
+
+```ts
+import { cn } from 'twl/macro'
+
+function Button({ cn }) {
+  return cn
+}
+```
+
+```ts
+import { twMerge as tm } from 'twl/macro'
+
+function reset() {
+  const tm = 1
+  return tm
+}
+```
+
+## Valid
+
+```ts
+import { cn } from 'twl/macro'
+
+function Button({ cn: className }) {
+  return className
+}
+```
+
+Without a macro import, a local `cn` is just a name and is not reported.

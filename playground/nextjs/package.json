@@ -36,11 +36,11 @@
     "@serwist/cli": "^9.5.12",
     "@serwist/next": "^9.5.12",
     "@tailwindcss/postcss": "^4.3.3",
-    "@types/node": "^25.2.2",
+    "@types/node": "^25.9.8",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "babel-plugin-react-compiler": "^1.0.0",
-    "lint-staged": "^17.5.1",
+    "lint-staged": "^17.6.0",
     "next-auto-import": "^0.0.4",
     "postcss": "^8.5.28",
     "serwist": "^9.5.12",
@@ -49,5 +49,5 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3"
   },
-  "packageManager": "pnpm@10.30.3"
+  "packageManager": "pnpm@10.34.5"
 }

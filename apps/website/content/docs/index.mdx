@@ -54,3 +54,9 @@ the compiler plugin; import from `twl` to use templates directly at runtime.
 The macro entry contains only type declarations for `cn`, `clsx`, and
 `twMerge`. Compiled code imports `twl/runtime`, which directly re-exports `cn`, `clsx`,
 and `twMerge` from `cn`. The `twl` entry provides template support.
+
+## Linting
+
+[`eslint-plugin-twl` and `oxlint-plugin-twl`](/docs/lint) sort classes inside
+each comment group and report, in the editor, the templates the compiler would
+refuse.

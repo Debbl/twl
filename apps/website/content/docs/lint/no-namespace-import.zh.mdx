@@ -1,0 +1,26 @@
+---
+title: no-namespace-import
+description: 禁止用命名空间方式导入 twl 宏模块。
+---
+
+推荐级别：`error`。
+
+编译器按导入名识别宏，无法追踪命名空间对象，所以会拒绝对宏模块的命名空间导入。
+
+## 错误示例
+
+```ts
+import * as twl from 'twl/macro'
+
+twl.cn`p-2`
+```
+
+## 正确示例
+
+```ts
+import { cn } from 'twl/macro'
+
+cn`p-2`
+```
+
+`settings.twl.from` 里列出的模块也按同样规则检查。

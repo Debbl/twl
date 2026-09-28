@@ -1,0 +1,40 @@
+---
+title: no-shadowed-macro
+description: 禁止本地绑定遮蔽导入的 twl 宏。
+---
+
+推荐级别：`error`。
+
+与导入的宏同名的本地绑定，会让文件里一部分引用指向别的东西。编译器不去猜是哪些，而是直接
+拒绝整个文件。这条规则会报出每一个这样的绑定，包括别名。
+
+## 错误示例
+
+```ts
+import { cn } from 'twl/macro'
+
+function Button({ cn }) {
+  return cn
+}
+```
+
+```ts
+import { twMerge as tm } from 'twl/macro'
+
+function reset() {
+  const tm = 1
+  return tm
+}
+```
+
+## 正确示例
+
+```ts
+import { cn } from 'twl/macro'
+
+function Button({ cn: className }) {
+  return className
+}
+```
+
+没有导入宏时，本地的 `cn` 只是普通名字，不会被报告。

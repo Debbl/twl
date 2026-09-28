@@ -1,0 +1,76 @@
+---
+title: sort-classes
+description: Sort Tailwind classes in twl templates, within each comment group.
+---
+
+Recommended: `warn`. Fixable with `--fix`.
+
+Sorts classes by Tailwind's order, the same order
+`prettier-plugin-tailwindcss` produces, but only inside a group. A `//`
+comment, an interpolation or a blank line ends a group, and no class ever moves
+past one.
+
+```ts
+cn`
+  // layout
+  items-center flex
+  // spacing
+  p-4 m-2
+  ${active && 'ring-2'}
+  font-bold text-sm
+`
+```
+
+`--fix` turns that into:
+
+```ts
+cn`
+  // layout
+  flex items-center
+  // spacing
+  m-2 p-4
+  ${active && 'ring-2'}
+  text-sm font-bold
+`
+```
+
+Only the class names trade places. Whitespace stays where it was, so a group
+written over several lines keeps its line breaks and indentation.
+
+Classes Tailwind does not know come first, in their original order.
+
+## Setup
+
+The rule needs `settings.twl.stylesheet`, the Tailwind CSS v4 entry file, and
+`@tailwindcss/node` installed:
+
+```sh
+pnpm add -D @tailwindcss/node
+```
+
+Without `stylesheet` the rule warns once and skips sorting.
+
+## Options
+
+| Option               | Default | Purpose                                       |
+| -------------------- | ------- | --------------------------------------------- |
+| `preserveDuplicates` | `false` | Keep repeats of a known class within a group. |
+
+The rule entry is written the same way in `eslint.config.js` and in an Oxlint
+config:
+
+```js
+rules: {
+  'twl/sort-classes': ['warn', { preserveDuplicates: true }],
+}
+```
+
+## Notes
+
+- The design system is loaded once per stylesheet in a worker thread and
+  reloaded when that file changes. An edit to a file it imports takes a restart
+  of the ESLint or Oxlint language server.
+- Templates containing a backslash escape are left untouched.
+- Expressions inside `${}` are not sorted.
+- Leave `prettier-plugin-tailwindcss` out for these templates, or the two will
+  keep undoing each other. See [Limitations](/docs/limitations).

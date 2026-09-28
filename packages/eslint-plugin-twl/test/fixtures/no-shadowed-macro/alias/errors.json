@@ -1,0 +1,8 @@
+[
+  {
+    "messageId": "shadowed",
+    "message": "`tm` shadows the `twMerge` macro imported from twl, so this file cannot be compiled. Rename the local binding.",
+    "line": 4,
+    "column": 9
+  }
+]

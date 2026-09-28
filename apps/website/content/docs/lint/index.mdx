@@ -1,0 +1,107 @@
+---
+title: Overview
+description: One plugin for ESLint and Oxlint - class sorting that respects comment groups, and the compiler's refusals caught in the editor.
+---
+
+## ESLint
+
+```sh
+pnpm add -D eslint-plugin-twl
+```
+
+ESLint 9 flat config:
+
+```js
+// eslint.config.js
+import twl from 'eslint-plugin-twl'
+
+export default [
+  twl.configs.recommended,
+  {
+    settings: {
+      twl: {
+        // Tailwind CSS entry, resolved from the linter's working directory.
+        stylesheet: './src/app.css',
+      },
+    },
+  },
+]
+```
+
+## Oxlint
+
+```sh
+pnpm add -D oxlint-plugin-twl
+```
+
+`oxlint-plugin-twl` runs the same rules as an Oxlint JS plugin. Its
+`recommended` config registers the plugin and turns the rules on:
+
+```ts
+// oxlint.config.ts
+import { defineConfig } from 'oxlint'
+import twl from 'oxlint-plugin-twl'
+
+export default defineConfig({
+  extends: [twl.configs.recommended],
+  settings: {
+    twl: { stylesheet: './src/app.css' },
+  },
+})
+```
+
+In `.oxlintrc.json`, which cannot import a config, list the plugin and the
+rules yourself:
+
+```json
+{
+  "jsPlugins": ["oxlint-plugin-twl"],
+  "settings": { "twl": { "stylesheet": "./src/app.css" } },
+  "rules": {
+    "twl/sort-classes": "warn",
+    "twl/no-interpolation-in-comment": "error",
+    "twl/no-namespace-import": "error",
+    "twl/no-shadowed-macro": "error"
+  }
+}
+```
+
+Oxlint's JS plugin support is still alpha; the plugin is tested against Oxlint
+1.85 and later.
+
+Both packages are ESM only.
+
+## One set of rules
+
+`oxlint-plugin-twl` has no rules of its own. It hands Oxlint the rule objects
+of `eslint-plugin-twl` unchanged, which Oxlint's JS plugin API runs as they
+are. Every rule, option and setting on these pages therefore means the same
+in both linters, and the two test suites share their cases.
+
+The rules only use ESLint's types, not its runtime, so an Oxlint setup does
+not need ESLint installed.
+
+## Settings
+
+Every rule reads `settings.twl`, in ESLint and Oxlint alike, so the options
+are written once.
+
+| Setting      | Default         | Purpose                                                            |
+| ------------ | --------------- | ------------------------------------------------------------------ |
+| `from`       | `['twl/macro']` | Macro module specifiers. Keep it in step with the compiler option. |
+| `stylesheet` | none            | Tailwind CSS v4 entry file. Required by `twl/sort-classes`.        |
+
+Rules follow the import binding, as the compiler does: `import { cn as c }` is
+checked, and a `cn` from any other module is left alone.
+
+## Rules
+
+| Rule                                                                        | Recommended | Fixable |
+| --------------------------------------------------------------------------- | ----------- | ------- |
+| [`twl/sort-classes`](/docs/lint/sort-classes)                               | warn        | yes     |
+| [`twl/no-interpolation-in-comment`](/docs/lint/no-interpolation-in-comment) | error       |         |
+| [`twl/no-namespace-import`](/docs/lint/no-namespace-import)                 | error       |         |
+| [`twl/no-shadowed-macro`](/docs/lint/no-shadowed-macro)                     | error       |         |
+
+The last three report what the compiler would refuse at build time, so the
+error shows up in the editor rather than in the build log.

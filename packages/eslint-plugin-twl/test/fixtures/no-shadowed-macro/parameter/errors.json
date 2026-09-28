@@ -1,0 +1,8 @@
+[
+  {
+    "messageId": "shadowed",
+    "message": "`cn` shadows the `cn` macro imported from twl, so this file cannot be compiled. Rename the local binding.",
+    "line": 3,
+    "column": 19
+  }
+]

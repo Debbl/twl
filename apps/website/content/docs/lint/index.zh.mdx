@@ -1,0 +1,101 @@
+---
+title: 概览
+description: 一个插件同时支持 ESLint 和 Oxlint：按注释分组排序类名，并把编译器会拒绝的写法提前到编辑器里报出来。
+---
+
+## ESLint
+
+```sh
+pnpm add -D eslint-plugin-twl
+```
+
+ESLint 9 flat config：
+
+```js
+// eslint.config.js
+import twl from 'eslint-plugin-twl'
+
+export default [
+  twl.configs.recommended,
+  {
+    settings: {
+      twl: {
+        // Tailwind CSS 入口文件，相对 linter 的工作目录解析。
+        stylesheet: './src/app.css',
+      },
+    },
+  },
+]
+```
+
+## Oxlint
+
+```sh
+pnpm add -D oxlint-plugin-twl
+```
+
+`oxlint-plugin-twl` 以 Oxlint JS 插件的形式运行同一套规则。它的 `recommended` 配置会
+注册插件并开启这些规则：
+
+```ts
+// oxlint.config.ts
+import { defineConfig } from 'oxlint'
+import twl from 'oxlint-plugin-twl'
+
+export default defineConfig({
+  extends: [twl.configs.recommended],
+  settings: {
+    twl: { stylesheet: './src/app.css' },
+  },
+})
+```
+
+`.oxlintrc.json` 不能导入配置，需要自己列出插件和规则：
+
+```json
+{
+  "jsPlugins": ["oxlint-plugin-twl"],
+  "settings": { "twl": { "stylesheet": "./src/app.css" } },
+  "rules": {
+    "twl/sort-classes": "warn",
+    "twl/no-interpolation-in-comment": "error",
+    "twl/no-namespace-import": "error",
+    "twl/no-shadowed-macro": "error"
+  }
+}
+```
+
+Oxlint 的 JS 插件支持目前仍是 alpha 阶段；本插件在 Oxlint 1.85 及以上版本测试过。
+
+两个包都只提供 ESM。
+
+## 同一套规则
+
+`oxlint-plugin-twl` 本身不包含规则，它把 `eslint-plugin-twl` 的规则对象原样交给 Oxlint，
+由 Oxlint 的 JS 插件 API 直接运行。因此这几页里的每条规则、选项和配置在两个 linter 中
+含义完全相同，两边的测试也共用同一套用例。
+
+规则只用到 ESLint 的类型，不依赖它的运行时，所以只用 Oxlint 时不需要安装 ESLint。
+
+## 配置
+
+无论在 ESLint 还是 Oxlint 中，所有规则都读取 `settings.twl`，所以只需要写一次。
+
+| 配置         | 默认值          | 作用                                                    |
+| ------------ | --------------- | ------------------------------------------------------- |
+| `from`       | `['twl/macro']` | 提供宏的模块名，应与编译器的 `from` 选项保持一致。      |
+| `stylesheet` | 无              | Tailwind CSS v4 的入口文件，`twl/sort-classes` 需要它。 |
+
+规则和编译器一样按 import 绑定识别宏：`import { cn as c }` 会被检查，而从其他模块引入的
+`cn` 不会被当作宏。
+
+## 规则
+
+| 规则                                                                           | 推荐级别 | 可自动修复 |
+| ------------------------------------------------------------------------------ | -------- | ---------- |
+| [`twl/sort-classes`](/zh/docs/lint/sort-classes)                               | warn     | 是         |
+| [`twl/no-interpolation-in-comment`](/zh/docs/lint/no-interpolation-in-comment) | error    |            |
+| [`twl/no-namespace-import`](/zh/docs/lint/no-namespace-import)                 | error    |            |
+| [`twl/no-shadowed-macro`](/zh/docs/lint/no-shadowed-macro)                     | error    |            |
+
+后三条规则报的都是编译器在构建时会拒绝的写法，这样错误出现在编辑器里，不必等到构建日志。

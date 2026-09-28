@@ -6,11 +6,13 @@ See [packages/twl](packages/twl) for the docs.
 ## Layout
 
 ```
-packages/twl           the runtime, the compiler, and every bundler integration
-packages/babel-*       the superseded Babel macro
-apps/website           docs, built with twl and best-i18n
-playground/nextjs      Next.js + Turbopack, through twl/next
-playground/vite-react  Vite + React, through twl/vite
+packages/twl                the runtime, the compiler, and every bundler integration
+packages/eslint-plugin-twl  class sorting and compiler checks for ESLint
+packages/oxlint-plugin-twl  the same rules for Oxlint
+packages/babel-*            the superseded Babel macro
+apps/website                docs, built with twl and best-i18n
+playground/nextjs           Next.js + Turbopack, through twl/next
+playground/vite-react       Vite + React, through twl/vite
 ```
 
 ## Tasks

@@ -1,0 +1,27 @@
+---
+title: no-interpolation-in-comment
+description: 禁止在 twl 模板的 `//` 注释里写插值。
+---
+
+推荐级别：`error`。
+
+`//` 注释一直延伸到行尾，同一行里的插值也会被包进去。编译器会把这个插值连同注释一起丢掉，
+为了不悄悄丢值，它会直接拒绝整个文件。这条规则在编辑器里报出同一个插值。
+
+## 错误示例
+
+```ts
+cn`p-2 // highlighted ${active && 'ring-2'}`
+```
+
+## 正确示例
+
+```ts
+cn`
+  p-2 // highlighted
+  ${active && 'ring-2'}
+`
+```
+
+注释只在 token 边界开始，所以 `bg-[url(https://a.com/x.png)]` 和 `content-['//']`
+都是类名，不是注释。

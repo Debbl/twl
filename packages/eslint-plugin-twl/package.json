@@ -1,8 +1,14 @@
 {
   "name": "eslint-plugin-twl",
   "version": "0.4.2",
-  "description": "",
-  "keywords": [],
+  "description": "ESLint rules for twl class name templates: Tailwind class sorting within comment groups, and the compiler's constraints caught in the editor",
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin",
+    "tailwindcss",
+    "twl"
+  ],
   "homepage": "https://github.com/Debbl/twl#readme",
   "bugs": "https://github.com/Debbl/twl/issues",
   "license": "MIT",
@@ -16,30 +22,44 @@
     "dist"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "typesVersions": {
-    "*": {
-      "*": [
-        "./dist/*",
-        "./dist/index.d.ts"
-      ]
-    }
-  },
+  "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    }
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "pnpm build && node ./dist/index.cjs",
     "build": "tsdown",
     "test": "vitest",
-    "release": "pnpm build && bumpp && pnpm publish",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "synckit": "^0.11.13"
+  },
+  "devDependencies": {
+    "@tailwindcss/node": "^4.3.3",
+    "@types/estree": "^1.0.9",
+    "@typescript-eslint/parser": "^8.70.1",
+    "eslint": "^9.39.5",
+    "tailwindcss": "^4.3.3",
+    "twl": "workspace:*"
+  },
+  "peerDependencies": {
+    "@tailwindcss/node": ">=4",
+    "eslint": ">=9"
+  },
+  "peerDependenciesMeta": {
+    "@tailwindcss/node": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=20.19"
   },
   "packageManager": "pnpm@10.34.5"
 }

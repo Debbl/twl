@@ -1,4 +1,4 @@
 {
   "title": "Documentation",
-  "pages": ["index", "compiler", "integrations", "limitations"]
+  "pages": ["index", "compiler", "integrations", "lint", "limitations"]
 }

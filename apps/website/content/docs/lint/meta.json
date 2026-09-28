@@ -1,0 +1,10 @@
+{
+  "title": "ESLint & Oxlint",
+  "pages": [
+    "index",
+    "sort-classes",
+    "no-interpolation-in-comment",
+    "no-namespace-import",
+    "no-shadowed-macro"
+  ]
+}

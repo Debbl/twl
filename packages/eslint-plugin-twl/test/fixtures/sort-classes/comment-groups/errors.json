@@ -1,0 +1,14 @@
+[
+  {
+    "messageId": "unsorted",
+    "message": "These classes are not in Tailwind order.",
+    "line": 5,
+    "column": 3
+  },
+  {
+    "messageId": "unsorted",
+    "message": "These classes are not in Tailwind order.",
+    "line": 8,
+    "column": 3
+  }
+]
