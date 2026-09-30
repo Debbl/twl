@@ -1,6 +1,6 @@
 {
   "name": "oxlint-plugin-twl",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Oxlint JS plugin for twl class name templates: Tailwind class sorting within comment groups, and the compiler's constraints caught in the editor",
   "keywords": [
     "oxlint",
